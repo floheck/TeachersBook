@@ -43,6 +43,19 @@
   <ItemGroup>
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap.css" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap.min.css" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\js\bootstrap.js" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\js\npm.js" />
+    <Content Include="libraries\jQuery\jquery-3.2.1.min.js" />
+    <Content Include="libraries\knockout\knockout-3.4.2.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -57,6 +70,14 @@
     <Folder Include="libraries\jQuery\" />
     <Folder Include="libraries\knockout\" />
     <Folder Include="libraries\bootstrap\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\.DS_Store" />
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
