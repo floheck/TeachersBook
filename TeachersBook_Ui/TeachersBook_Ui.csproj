@@ -56,6 +56,48 @@
     <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\js\npm.js" />
     <Content Include="libraries\jQuery\jquery-3.2.1.min.js" />
     <Content Include="libraries\knockout\knockout-3.4.2.js" />
+    <Content Include="index.html" />
+    <Content Include="libraries\gentelella\css\custom.css" />
+    <Content Include="libraries\gentelella\css\custom.min.css" />
+    <Content Include="libraries\gentelella\js\custom.js" />
+    <Content Include="libraries\gentelella\js\custom.min.js" />
+    <Content Include="styles\navigation.css" />
+    <Content Include="scripts\navigation.js" />
+    <Content Include="libraries\fontawesome\css\font-awesome.css" />
+    <Content Include="libraries\fontawesome\css\font-awesome.min.css" />
+    <Content Include="libraries\fontawesome\fonts\FontAwesome.otf" />
+    <Content Include="libraries\fontawesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="libraries\fontawesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="libraries\fontawesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="libraries\fontawesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="styles\homepage.css" />
+    <Content Include="content\images\stundenplan1.jpg" />
+    <Content Include="content\images\bewerten.jpg" />
+    <Content Include="scripts\dragAndDrop.js" />
+    <Content Include="scripts\index.js" />
+    <Content Include="scripts\TeachersBook.ModuleLoader.js" />
+    <Content Include="content\data\TeachersBook.Configuration.js" />
+    <Content Include="sections\timetable\Timetable.html" />
+    <Content Include="sections\timetable\Timetable.js" />
+    <Content Include="scripts\TeachersBook.Resource.js" />
+    <Content Include="sections\timetable\Timetable.css" />
+    <Content Include="libraries\knockout\knockout-sortable.js" />
+    <Content Include="libraries\jquery-ui-1.12.1\index.html" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.js" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.min.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.min.js" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.structure.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.structure.min.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.theme.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.theme.min.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\external\jquery\jquery.js" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_444444_256x240.png" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_555555_256x240.png" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_777620_256x240.png" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_777777_256x240.png" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_ffffff_256x240.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -70,6 +112,11 @@
     <Folder Include="libraries\jQuery\" />
     <Folder Include="libraries\knockout\" />
     <Folder Include="libraries\bootstrap\" />
+    <Folder Include="libraries\fontawesome\" />
+    <Folder Include="content\" />
+    <Folder Include="content\images\" />
+    <Folder Include="content\data\" />
+    <Folder Include="sections\timetable\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\.DS_Store" />
@@ -78,6 +125,12 @@
     <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
     <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
     <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="libraries\fontawesome\fonts\fontawesome-webfont.woff2" />
+    <None Include="sections\timetable\Timetable.json" />
+    <None Include="libraries\jquery-ui-1.12.1\.DS_Store" />
+    <None Include="libraries\jquery-ui-1.12.1\AUTHORS.txt" />
+    <None Include="libraries\jquery-ui-1.12.1\LICENSE.txt" />
+    <None Include="libraries\jquery-ui-1.12.1\package.json" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

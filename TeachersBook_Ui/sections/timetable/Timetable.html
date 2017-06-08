@@ -1,0 +1,103 @@
+﻿<div id="time-table" class="content-wrapper time-table">
+	<div class="parallax"></div>
+		<div class="content-timetable">
+		<div>
+		    <ul class="nav navbar-right panel_toolbox">
+		        <li>
+		            <a id="editTimetable" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+		        </li>
+		    </ul>
+		</div>
+		<div style="margin: 0px 20px;">
+		    <table class="table table-striped">
+		        <thead>
+		            <tr>
+		                <th></th>
+		                <th>Montag</th>
+		                <th>Dienstag</th>
+		                <th>Mittwoch</th>
+		                <th>Donnerstag</th>
+		                <th>Freitag</th>
+		            </tr>
+		        </thead>
+		        <tbody data-bind="foreach: {data: timetable, as: 'row'}">
+		            <tr data-bind="template: {name: 'subjectTimetableTempl', foreach: row.subjects}">
+		                
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+		<div id="editTimetableWrapper" style="width:100%;">
+		    <div id="subjectsRow" class="row">
+		        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		            <div id="subjectWrapper" data-bind="template: { name: 'subjectTempl', foreach: subjects}">
+		            </div>
+		            <div class="add-subject-button" onclick="addNewSubject()">
+		                <i class="fa fa-plus" aria-hidden="true"></i>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+</div>
+
+<script id="subjectTimetableTempl" type="text/html">
+    <td ><div class="timetabel-subject-container">
+    <li style="width:100px; height:30px;" class="draggable subject" draggable="false" data-bind="event: {
+            dragover:  function(data, event){event.preventDefault();},
+            dragenter: function(data, event){
+                var element = $(event.target)
+                if(element.hasClass('draggable'))
+                     element.toggleClass('dragover');
+                event.preventDefault();
+            },
+            dragleave: function(data, event, $index){
+                var element = $(event.target)
+                if(element.hasClass('draggable'))
+                     element.toggleClass('dragover');
+                event.preventDefault();
+            },
+            drop: function(data, event){
+                jQuery(event.target).removeClass('dragover');
+                $root.replaceSubjectInTimetable(data, event);
+            }
+
+        },
+          style :{
+               'background-color' :  content.color
+        },
+        css : ($index() == 0 ? 'no-border' : '')
+        " class="subject"><span data-bind="text: content.name"></span></li>
+</div></td>
+<script id="subjectTempl" type="text/html">
+    <li class="draggable subject" draggable="true" data-bind="event:{
+	      dragstart:   function(data, event){
+	                    jQuery(event.target).addClass('dragSource');
+	                    $root.dragItem(data);
+	                    return $(event.target).hasClass('draggable');},
+
+	       dragend:   function(data, event){
+	                   jQuery(event.target).removeClass('dragSource')
+	                   return true;
+	       },
+	       dragover:  function(data, event){event.preventDefault();},
+	       dragenter: function(data, event){
+	                var element = $(event.target)
+	                if(element.hasClass('draggable'))
+	                     element.toggleClass('dragover');
+	                event.preventDefault();
+	        },
+	       dragleave: function(data, event, $index){
+	                var element = $(event.target)
+	                if(element.hasClass('draggable'))
+	                     element.toggleClass('dragover');
+	                event.preventDefault();
+	        }
+        }, 
+        style:{ 
+            'background-color' :  color 
+        }">
+
+        <span data-bind='text: name'></span>
+    </li>
+</script>

@@ -1,0 +1,40 @@
+﻿.placeholder {
+    width: 10px;
+    float: left;
+    height: 30px;
+}       
+
+.add-subject-button {
+    width: 30px;
+    height: 30px;
+    float: left;
+    text-align: center;
+    padding-top: 5px;
+}
+
+.timetabel-subject-container {
+    display:table-cell;
+    height:100%;
+    width:100%;
+}
+
+.subject {
+    border: 1px solid black;
+    background-color: wheat;
+    margin: 5px;
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+}
+
+.no-border {
+    border-style:none;
+}
+
+.dragSource {
+    opacity: .4;
+}
+
+.dragover {
+    border-style: dashed;
+}
