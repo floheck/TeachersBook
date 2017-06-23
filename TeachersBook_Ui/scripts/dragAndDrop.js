@@ -1,4 +1,4 @@
-﻿var lastId = 0;
+﻿/*var lastId = 0;
 var containerId = "";
 function allowDrop(ev) {
     ev.preventDefault();
@@ -20,4 +20,4 @@ function drop(ev) {
 	    jQuery("#" + containerId).append(newItem);
 	    lastId++;
     }
-}
+}*/

@@ -35,3 +35,19 @@
     padding: 15px;
     min-height: calc(100vh - 200px);
 }
+
+.mandatoryFieldNotFilled {
+    background-color: #ff7070;
+}
+
+/* bootstrap overwrites */
+
+.red-tooltip + .tooltip > .tooltip-inner {
+    background-color: #7a703c;
+}
+
+.teachersbook-modal-header {
+    background-color: #ECE0A3;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}

@@ -148,7 +148,7 @@
 
                         // activate bootstrap tooltips on the page
                         jQuery(function () {
-                            $('[data-toggle="tooltip"]').tooltip()
+                            jQuery('[data-toggle="tooltip"]').tooltip()
                         });
 
                         deferred.resolve();

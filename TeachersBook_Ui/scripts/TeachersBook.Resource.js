@@ -21,7 +21,6 @@
                 });
                  
                 readResourceFile.done(function (data) {
-                    
                     var LanguageResource = {};
                     var currentLanguage = Resource.getLanguage(Resource.defaultLanguage);
 
