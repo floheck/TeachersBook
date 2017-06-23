@@ -39,6 +39,7 @@
                             jQuery(this).next().show();
                             viewModel.lastValueBeforeChanged = jQuery(this).next().find("input").val();
                             viewModel.lastElementIdEdited = jQuery(this).next().find("input")[0].id;
+                            viewModel.lastValueHasSaved = false;
                         });
                     }
                     viewModel.afterRenderCounter++;
@@ -108,25 +109,16 @@
 					])},
                     {rowtype: "break",
                      subjects : ko.observableArray([
-                        {hour: 1, day: 0, content: {name : ko.observable("Pause"), color: "transparent"}},
-                        {hour: 1, day: 1, content: {name : ko.observable("FHE"), color: "transparent"}},
-                        {hour: 1, day: 2, content: {name : ko.observable("FHE"), color: "transparent"}},
-                        {hour: 1, day: 3, content: {name : ko.observable("FHE"), color: "transparent"}},
-                        {hour: 1, day: 4, content: {name : ko.observable("FHE"), color: "transparent"}},
-                        {hour: 1, day: 5, content: {name : ko.observable("FHE"), color: "transparent"}}
+                        {hour: 2, day: 0, content: {name : ko.observable("Pause"), color: "transparent"}},
+                        {hour: 2, day: 1, content: {name : ko.observable("FHE"), color: "transparent"}},
+                        {hour: 2, day: 2, content: {name : ko.observable("FHE"), color: "transparent"}},
+                        {hour: 2, day: 3, content: {name : ko.observable("FHE"), color: "transparent"}},
+                        {hour: 2, day: 4, content: {name : ko.observable("FHE"), color: "transparent"}},
+                        {hour: 2, day: 5, content: {name : ko.observable("FHE"), color: "transparent"}}
                     ])},
 					{rowtype: "subjects",
                      subjects : ko.observableArray([
-						{hour: 2, day: 0, content: {name : ko.observable("9:25 - 10:10"), color: "transparent"}},
-						{hour: 2, day: 1, content: {name : ko.observable("Deutsch"), schoolGrade: new ko.observable("3C"), color : new ko.observable("#98e299")}},
-						{hour: 2, day: 2, content: {name : ko.observable("Deutsch"), schoolGrade: new ko.observable("3C"), color : new ko.observable("#98e299")}},
-						{hour: 2, day: 3, content: {name : ko.observable("Mathe"), schoolGrade: new ko.observable("1A"), color : new ko.observable("#e86f6f")}},
-						{hour: 2, day: 4, content: {name : ko.observable("Deutsch"), schoolGrade: new ko.observable("3C"), color : new ko.observable("#98e299")}},
-						{hour: 2, day: 5, content: {name : ko.observable("Mathe"), schoolGrade: new ko.observable("1A"), color : new ko.observable("#e86f6f")}}
-					])},
-					{rowtype: "subjects",
-                     subjects : ko.observableArray([
-						{hour: 3, day: 0, content: {name : ko.observable("10:15 - 11:00"), color: "transparent"}},
+						{hour: 3, day: 0, content: {name : ko.observable("9:25 - 10:10"), color: "transparent"}},
 						{hour: 3, day: 1, content: {name : ko.observable("Deutsch"), schoolGrade: new ko.observable("3C"), color : new ko.observable("#98e299")}},
 						{hour: 3, day: 2, content: {name : ko.observable("Deutsch"), schoolGrade: new ko.observable("3C"), color : new ko.observable("#98e299")}},
 						{hour: 3, day: 3, content: {name : ko.observable("Mathe"), schoolGrade: new ko.observable("1A"), color : new ko.observable("#e86f6f")}},
@@ -135,12 +127,21 @@
 					])},
 					{rowtype: "subjects",
                      subjects : ko.observableArray([
-						{hour: 4, day: 0, content: {name : ko.observable("11:10 - 11:55"), color: "transparent"}},
+						{hour: 4, day: 0, content: {name : ko.observable("10:15 - 11:00"), color: "transparent"}},
 						{hour: 4, day: 1, content: {name : ko.observable("Deutsch"), schoolGrade: new ko.observable("3C"), color : new ko.observable("#98e299")}},
 						{hour: 4, day: 2, content: {name : ko.observable("Deutsch"), schoolGrade: new ko.observable("3C"), color : new ko.observable("#98e299")}},
 						{hour: 4, day: 3, content: {name : ko.observable("Mathe"), schoolGrade: new ko.observable("1A"), color : new ko.observable("#e86f6f")}},
 						{hour: 4, day: 4, content: {name : ko.observable("Deutsch"), schoolGrade: new ko.observable("3C"), color : new ko.observable("#98e299")}},
-						{hour: 4, day: 5, content: {name : ko.observable("&nbsp;"), schoolGrade : new ko.observable(""), color : new ko.observable("")}}
+						{hour: 4, day: 5, content: {name : ko.observable("Mathe"), schoolGrade: new ko.observable("1A"), color : new ko.observable("#e86f6f")}}
+					])},
+					{rowtype: "subjects",
+                     subjects : ko.observableArray([
+						{hour: 5, day: 0, content: {name : ko.observable("11:10 - 11:55"), color: "transparent"}},
+						{hour: 5, day: 1, content: {name : ko.observable("Deutsch"), schoolGrade: new ko.observable("3C"), color : new ko.observable("#98e299")}},
+						{hour: 5, day: 2, content: {name : ko.observable("Deutsch"), schoolGrade: new ko.observable("3C"), color : new ko.observable("#98e299")}},
+						{hour: 5, day: 3, content: {name : ko.observable("Mathe"), schoolGrade: new ko.observable("1A"), color : new ko.observable("#e86f6f")}},
+						{hour: 5, day: 4, content: {name : ko.observable("Deutsch"), schoolGrade: new ko.observable("3C"), color : new ko.observable("#98e299")}},
+						{hour: 5, day: 5, content: {name : ko.observable("&nbsp;"), schoolGrade : new ko.observable(""), color : new ko.observable("")}}
 					])}
 				]);
 			}

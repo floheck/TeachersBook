@@ -138,8 +138,8 @@
             </li>
             <div class="timetable-inline-edit-wrapper" style="display:none;">
                 <input type="text" data-bind="value: content.name, attr: {'id': 'txt_' + hour + '_' + day}" class="timetable-hour-time-textbox" />
-                <i class="fa fa-check" aria-hidden="true"></i>
-                <i class="fa fa-times" aria-hidden="true"></i>
+                <i class="fa fa-check" aria-hidden="true" data-bind="click: $root.saveInlineEditingChanges"></i>
+                <i class="fa fa-times" aria-hidden="true" data-bind="click: $root.discardInlineEditingChanges"></i>
             </div>
          </div>
     </td>
