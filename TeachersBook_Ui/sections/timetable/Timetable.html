@@ -20,7 +20,7 @@
 		                <th>Freitag</th>
 		            </tr>
 		        </thead>
-                <tbody data-bind="foreach: {data: timetable, as: 'row', afterRender: timetableIsRendered}">
+                <tbody data-bind="foreach: {data: timetable, as: 'row'}">
                     <!-- ko if: row.rowtype === 'subjects' -->
                     <tr data-bind="template: {name: 'subjectTimetableTempl', foreach: row.subjects}"></tr>
                     <!-- /ko -->
@@ -111,18 +111,20 @@
 	            drop: function(data, event){
 	                jQuery(event.target).removeClass('timetable-drag-over');
 	                $root.replaceSubjectInTimetable(data, event);
-	            }
+                },
+                click: $root.clickSubjectLabel
 
 	        },
 	          style :{
 	               'background-color' :  content.color
 	        },
-	        css : ($index() == 0 ? 'timetable-no-border' : '')
+            css : ($index() == 0 ? 'timetable-no-border' : ''),
+            visible: labelVisible
 	        " class="timetable-subject"><span data-bind="html: content.name"></span>
         </li>
         <!-- ko if: day === 0 -->
-         <div class="timetable-inline-edit-wrapper" style="display:none;">
-             <input type="text" data-bind="value: content.name, attr: {'id': 'txt_' + hour + '_' + day}" class="timetable-hour-time-textbox" />
+         <div class="timetable-inline-edit-wrapper" data-bind="visible: inlineEditingVisible">
+             <input type="text" data-bind="value: content.name, attr: {'id': 'txt_' + hour + '_' + day}, event: { 'keyup': $root.saveInlineEditingChanges }" class="timetable-hour-time-textbox" />
              <i class="fa fa-check" aria-hidden="true" data-bind="click: $root.saveInlineEditingChanges"></i>
              <i class="fa fa-times" aria-hidden="true" data-bind="click: $root.discardInlineEditingChanges" ></i>
          </div>
@@ -134,9 +136,11 @@
         <div class="timetabel-subject-container">
             <li class="timetable-subject timetable-no-border" 
                 data-bind="html: content.name,
-                           style: {'background-color' : content.color}">
+                           style: {'background-color' : content.color},
+                           click: $root.clickSubjectLabel,
+                           visible: labelVisible">
             </li>
-            <div class="timetable-inline-edit-wrapper" style="display:none;">
+            <div class="timetable-inline-edit-wrapper" data-bind="visible: inlineEditingVisible">
                 <input type="text" data-bind="value: content.name, attr: {'id': 'txt_' + hour + '_' + day}" class="timetable-hour-time-textbox" />
                 <i class="fa fa-check" aria-hidden="true" data-bind="click: $root.saveInlineEditingChanges"></i>
                 <i class="fa fa-times" aria-hidden="true" data-bind="click: $root.discardInlineEditingChanges"></i>
