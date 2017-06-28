@@ -3,7 +3,7 @@
     height: 30px;
     float: left;
     text-align: center;
-    padding-top: 5px;
+    padding-top: 10px;
 }
 
 .timetabel-subject-container {
@@ -19,6 +19,8 @@
     display: inline-block;
     width: 100px;
     text-align: center;
+    height: 30px;
+    width: 140px;
 }
 
 .timetable-subject-dragable {
@@ -39,6 +41,67 @@
 
 .timetable-subject-wrapper {
     float:left;
+}
+
+.timetable-subject-text-wrapper {
+    width:140px;
+    height:30px;
+    position:relative;
+}
+
+.timetable-subject-text {
+    width:100%;
+    position:absolute;
+}
+
+.timetable-remove-subject {
+    width: 50%;
+    height: calc(100% - 2px);
+    position: absolute;
+    z-index: 100;
+    background-color: wheat;
+    margin-left: calc(50% - 2px);
+    opacity: 0;
+    transition: opacity 0.3s linear;
+    -webkit-transition-delay: 0.5s; /* Safari 4.0 - 8.0 */
+    transition-delay: 0.5s;
+}
+
+.timetable-subject-choos-text-wrapper {
+    display:table;
+}
+
+.timetable-subject-choos-text {
+    display:table-cell;
+    vertical-align:middle;
+    position:relative !important;
+}
+
+.timetable-subject-name {
+    width: 75%;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+    height: 29px;
+    padding-top: 3px;
+}
+
+.timetable-subject-class {
+    width: 25%;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 30px;
+    padding-top: 3px;
+}
+
+.has-subject {
+    
+}
+
+.has-subject:hover .timetable-remove-subject {
+    opacity:1;
 }
 
 .timetable-break-row {

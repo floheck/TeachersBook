@@ -94,7 +94,7 @@
 <script id="subjectTimetableTempl" type="text/html">
     <!-- ko if: row.rowtype === 'subjects' -->
     <td ><div class="timetabel-subject-container">
-	    <li style="width:100px; height:30px;" class="draggable timetable-subject" draggable="false" data-bind="event: {
+	    <li class="draggable timetable-subject" draggable="false" data-bind="event: {
 	            dragover:  function(data, event){event.preventDefault();},
 	            dragenter: function(data, event){
 	                var element = $(event.target)
@@ -120,7 +120,17 @@
 	        },
             css : ($index() == 0 ? 'timetable-no-border' : ''),
             visible: labelVisible
-	        " class="timetable-subject"><span data-bind="html: content.name"></span>
+            " class="timetable-subject">
+            <div class="timetable-subject-text-wrapper" data-bind="css: (hasSubject() === false ? '' : 'has-subject')">
+                <div class="timetable-subject-text">
+                    <div class="timetable-subject-name" data-bind='html: content.name'></div> <div class="timetable-subject-class" data-bind="html: content.schoolGrade"></div>
+                </div>
+                <div class="timetable-remove-subject" data-bind="click: $root.deleteSubject">
+                    <span>
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </span>
+                </div>
+			</div>
         </li>
         <!-- ko if: day === 0 -->
          <div class="timetable-inline-edit-wrapper" data-bind="visible: inlineEditingVisible">
@@ -177,7 +187,11 @@
         style:{ 
             'background-color' :  color 
         }">
+        <div class="timetable-subject-text-wrapper timetable-subject-choos-text-wrapper">
+            <div class="timetable-subject-text timetable-subject-choos-text">
+                <div class="timetable-subject-name" data-bind='html: name'></div> <div class="timetable-subject-class" data-bind="html: schoolGrade"></div>
+            </div>
+        </div>
 
-        <span data-bind='html: name'></span> <span data-bind="html: schoolGrade">(3A)</span>
     </li>
 </script>
