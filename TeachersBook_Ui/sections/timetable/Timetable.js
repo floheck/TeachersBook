@@ -90,6 +90,26 @@
                     jQuery(".timetable-remove-subject").style("opacity", "0");
                 }
 
+                viewModel.addNewSubjectRow = function(data, event) {
+                    var newRow = {
+                     rowtype: "subjects",
+                     subjects : ko.observableArray([
+                        {hour: data.hour + 1, day: 0, hasSubject: ko.observable(false), labelVisible: ko.observable(true), inlineEditingVisible: ko.observable(false), content: {name : ko.observable("&nbsp;"), color: "transparent"}},
+                        {hour: data.hour + 1, day: 1, hasSubject: ko.observable(false), labelVisible: ko.observable(true), inlineEditingVisible: ko.observable(false), content: {name : ko.observable("&nbsp;"), schoolGrade : ko.observable(""), color : ko.observable("")}},
+                        {hour: data.hour + 1, day: 2, hasSubject: ko.observable(true), labelVisible: ko.observable(true), inlineEditingVisible: ko.observable(false), content: {name : ko.observable("&nbsp;"), schoolGrade: new ko.observable(""), color : new ko.observable("")}},
+                        {hour: data.hour + 1, day: 3, hasSubject: ko.observable(true), labelVisible: ko.observable(true), inlineEditingVisible: ko.observable(false), content: {name : ko.observable("&nbsp;"), schoolGrade: new ko.observable(""), color : new ko.observable("")}},
+                        {hour: data.hour + 1, day: 4, hasSubject: ko.observable(true), labelVisible: ko.observable(true), inlineEditingVisible: ko.observable(false), content: {name : ko.observable("&nbsp;"), schoolGrade: new ko.observable(""), color : new ko.observable("")}},
+                        {hour: data.hour + 1, day: 5, hasSubject: ko.observable(true), labelVisible: ko.observable(true), inlineEditingVisible: ko.observable(false), content: {name : ko.observable("&nbsp;"), schoolGrade: new ko.observable(""), color : new ko.observable("")}}
+                    ])};
+                    viewModel.timetable.splice(data.hour + 1, 0, newRow);
+                    debugger;
+                    for(var i = data.hour + 2; i<viewModel.timetable().length;i++) {
+                        for(var j=0;j<viewModel.timetable()[i].subjects().length;j++) {
+                            viewModel.timetable()[i].subjects()[j].hour = viewModel.timetable()[i].subjects()[j].hour + 1;
+                        }
+                    }
+                }
+
                 viewModel.subjects = ko.observableArray([
                     {name : "Mathe", schoolGrade: "1A", color : "#e86f6f"}, 
                     {name : "Deutsch", schoolGrade: "3C", color : "#98e299"}, 

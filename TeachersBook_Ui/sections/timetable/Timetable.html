@@ -93,7 +93,8 @@
 
 <script id="subjectTimetableTempl" type="text/html">
     <!-- ko if: row.rowtype === 'subjects' -->
-    <td ><div class="timetabel-subject-container">
+    <td data-bind="css: (day === 0 ? 'time-cell' : '')">
+        <div class="timetabel-subject-container">
 	    <li class="draggable timetable-subject" draggable="false" data-bind="event: {
 	            dragover:  function(data, event){event.preventDefault();},
 	            dragenter: function(data, event){
@@ -133,16 +134,22 @@
 			</div>
         </li>
         <!-- ko if: day === 0 -->
-         <div class="timetable-inline-edit-wrapper" data-bind="visible: inlineEditingVisible">
-             <input type="text" data-bind="value: content.name, attr: {'id': 'txt_' + hour + '_' + day}, event: { 'keyup': $root.saveInlineEditingChanges }" class="timetable-hour-time-textbox" />
-             <i class="fa fa-check" aria-hidden="true" data-bind="click: $root.saveInlineEditingChanges"></i>
-             <i class="fa fa-times" aria-hidden="true" data-bind="click: $root.discardInlineEditingChanges" ></i>
-         </div>
+	    <div class="timetable-inline-edit-wrapper" data-bind="visible: inlineEditingVisible">
+	        <input type="text" data-bind="value: content.name, attr: {'id': 'txt_' + hour + '_' + day}, event: { 'keyup': $root.saveInlineEditingChanges }" class="timetable-hour-time-textbox" />
+	        <i class="fa fa-check" aria-hidden="true" data-bind="click: $root.saveInlineEditingChanges"></i>
+	        <i class="fa fa-times" aria-hidden="true" data-bind="click: $root.discardInlineEditingChanges" ></i>
+        </div>
         <!-- /ko -->
-    </div></td>
+        </div>
+        <!-- ko if: day === 0 -->
+        <div class="timetable-add-row">
+            <i class="fa fa-plus-square" aria-hidden="true" data-bind="click: $root.addNewSubjectRow" ></i>
+        </div>
+        <!-- /ko -->
+    </td>
     <!-- /ko -->
     <!-- ko if: row.rowtype === 'break' -->
-    <td>
+    <td data-bind="css: (day === 0 ? 'time-cell' : '')">
         <div class="timetabel-subject-container">
             <li class="timetable-subject timetable-no-border" 
                 data-bind="html: content.name,
@@ -155,7 +162,12 @@
                 <i class="fa fa-check" aria-hidden="true" data-bind="click: $root.saveInlineEditingChanges"></i>
                 <i class="fa fa-times" aria-hidden="true" data-bind="click: $root.discardInlineEditingChanges"></i>
             </div>
-         </div>
+        </div>        
+        <!-- ko if: day === 0 -->
+        <div class="timetable-add-row">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+        </div>
+        <!-- /ko -->
     </td>
     <!-- /ko -->
 </script>
