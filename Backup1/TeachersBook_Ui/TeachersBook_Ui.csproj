@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B8332179-055B-435D-B2F4-FB02C601F6E8}</ProjectGuid>
+    <ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TeachersBook_Ui</RootNamespace>
+    <AssemblyName>TeachersBook_Ui</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>40</FileUpgradeFlags>
+    <UpgradeBackupLocation>C:\Dev\TeachersBook\Backup\TeachersBook_Ui\</UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+    <Content Include="Global.asax" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap.css" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap.min.css" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\js\bootstrap.js" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
+    <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\js\npm.js" />
+    <Content Include="libraries\jQuery\jquery-3.2.1.min.js" />
+    <Content Include="libraries\knockout\knockout-3.4.2.js" />
+    <Content Include="index.html" />
+    <Content Include="libraries\gentelella\css\custom.css" />
+    <Content Include="libraries\gentelella\css\custom.min.css" />
+    <Content Include="libraries\gentelella\js\custom.js" />
+    <Content Include="libraries\gentelella\js\custom.min.js" />
+    <Content Include="styles\navigation.css" />
+    <Content Include="scripts\navigation.js" />
+    <Content Include="libraries\fontawesome\css\font-awesome.css" />
+    <Content Include="libraries\fontawesome\css\font-awesome.min.css" />
+    <Content Include="libraries\fontawesome\fonts\FontAwesome.otf" />
+    <Content Include="libraries\fontawesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="libraries\fontawesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="libraries\fontawesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="libraries\fontawesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="styles\homepage.css" />
+    <Content Include="content\images\stundenplan1.jpg" />
+    <Content Include="content\images\bewerten.jpg" />
+    <Content Include="scripts\dragAndDrop.js" />
+    <Content Include="scripts\index.js" />
+    <Content Include="scripts\TeachersBook.ModuleLoader.js" />
+    <Content Include="content\data\TeachersBook.Configuration.js" />
+    <Content Include="sections\timetable\Timetable.html" />
+    <Content Include="sections\timetable\Timetable.js" />
+    <Content Include="scripts\TeachersBook.Resource.js" />
+    <Content Include="sections\timetable\Timetable.css" />
+    <Content Include="libraries\knockout\knockout-sortable.js" />
+    <Content Include="libraries\jquery-ui-1.12.1\index.html" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.js" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.min.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.min.js" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.structure.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.structure.min.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.theme.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.theme.min.css" />
+    <Content Include="libraries\jquery-ui-1.12.1\external\jquery\jquery.js" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_444444_256x240.png" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_555555_256x240.png" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_777620_256x240.png" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_777777_256x240.png" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="libraries\jquery-ui-1.12.1\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="libraries\colorpicker2.5.1\css\bootstrap-colorpicker.css" />
+    <Content Include="libraries\colorpicker2.5.1\css\bootstrap-colorpicker.min.css" />
+    <Content Include="libraries\colorpicker2.5.1\img\bootstrap-colorpicker\alpha-horizontal.png" />
+    <Content Include="libraries\colorpicker2.5.1\img\bootstrap-colorpicker\alpha.png" />
+    <Content Include="libraries\colorpicker2.5.1\img\bootstrap-colorpicker\hue-horizontal.png" />
+    <Content Include="libraries\colorpicker2.5.1\img\bootstrap-colorpicker\hue.png" />
+    <Content Include="libraries\colorpicker2.5.1\img\bootstrap-colorpicker\saturation.png" />
+    <Content Include="libraries\colorpicker2.5.1\js\bootstrap-colorpicker.js" />
+    <Content Include="libraries\colorpicker2.5.1\js\bootstrap-colorpicker.min.js" />
+    <Content Include="scripts\TeachersBook.CommonFunctions.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="scripts\" />
+    <Folder Include="styles\" />
+    <Folder Include="libraries\" />
+    <Folder Include="sections\" />
+    <Folder Include="libraries\jQuery\" />
+    <Folder Include="libraries\knockout\" />
+    <Folder Include="libraries\bootstrap\" />
+    <Folder Include="libraries\fontawesome\" />
+    <Folder Include="content\" />
+    <Folder Include="content\images\" />
+    <Folder Include="content\data\" />
+    <Folder Include="sections\timetable\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\.DS_Store" />
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
+    <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="libraries\fontawesome\fonts\fontawesome-webfont.woff2" />
+    <None Include="libraries\jquery-ui-1.12.1\.DS_Store" />
+    <None Include="libraries\jquery-ui-1.12.1\AUTHORS.txt" />
+    <None Include="libraries\jquery-ui-1.12.1\LICENSE.txt" />
+    <None Include="libraries\jquery-ui-1.12.1\package.json" />
+    <None Include="libraries\colorpicker2.5.1\.DS_Store" />
+    <None Include="libraries\colorpicker2.5.1\css\bootstrap-colorpicker.css.map" />
+    <None Include="libraries\colorpicker2.5.1\css\bootstrap-colorpicker.min.css.map" />
+    <None Include="libraries\colorpicker2.5.1\img\.DS_Store" />
+    <None Include="sections\timetable\Timetable.json" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v15.0\WebApplications\Microsoft.WebApplication.targets" />
+</Project>
