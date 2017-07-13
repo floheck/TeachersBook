@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9ba8e06760f1430590010c5619986106" Name="Diagram1">
+        <EntityTypeShape EntityType="TeachersBookModel.Classes" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeachersBookModel.Pupils" Width="1.5" PointX="2.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeachersBookModel.TimeTables" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="TeachersBookModel.FK_Pupils_Classes" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TeachersBookModel.UserData" Width="1.5" PointX="0.75" PointY="1.5" />
+        <AssociationConnector Association="TeachersBookModel.FK_TimeTables_UserData" />
+        <AssociationConnector Association="TeachersBookModel.FK_Classes_UserData" />
+        <EntityTypeShape EntityType="TeachersBookModel.Subjects" Width="1.5" PointX="5.375" PointY="1.375" />
+        <EntityTypeShape EntityType="TeachersBookModel.TimeTableBreaks" Width="1.5" PointX="7.625" PointY="5.625" />
+        <EntityTypeShape EntityType="TeachersBookModel.TimeTableRows" Width="1.5" PointX="9.875" PointY="1.375" />
+        <EntityTypeShape EntityType="TeachersBookModel.TimeTableSubjects" Width="1.5" PointX="7.625" PointY="1" />
+        <AssociationConnector Association="TeachersBookModel.FK_TimeTableSubjects_Subjects" />
+        <AssociationConnector Association="TeachersBookModel.FK_TimeTableSubjects_Subjects1" />
+        <AssociationConnector Association="TeachersBookModel.FK_TimeTableSubjects_Subjects2" />
+        <AssociationConnector Association="TeachersBookModel.FK_TimeTableSubjects_Subjects3" />
+        <AssociationConnector Association="TeachersBookModel.FK_TimeTableSubjects_Subjects4" />
+        <AssociationConnector Association="TeachersBookModel.FK_TimeTableSubjects_Subjects5" />
+        <AssociationConnector Association="TeachersBookModel.FK_TimeTableRows_TimeTableBreaks" />
+        <AssociationConnector Association="TeachersBookModel.FK_TimeTableRows_TimeTables" />
+        <AssociationConnector Association="TeachersBookModel.FK_TimeTableRows_TimeTableSubjects" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

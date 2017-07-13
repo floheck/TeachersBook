@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.Owin;
 using Owin;
-using AzureWebApi;
 using Microsoft.Owin.Security.OAuth;
 using System.Web.Http;
 
