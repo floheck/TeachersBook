@@ -11,6 +11,9 @@ namespace TeachersBook_WebApi
         public static void Register(HttpConfiguration config)
         {
             // Web-API-Konfiguration und -Dienste
+            // Enable CORS
+            //config.EnableCors();
+
 
             // Web-API-Routen
             config.MapHttpAttributeRoutes();

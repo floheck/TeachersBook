@@ -17,6 +17,7 @@ namespace TeachersBook_WebApi
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+
             using (var ctx = new TeachersBookEntities2())
             {
                 var userQuery =

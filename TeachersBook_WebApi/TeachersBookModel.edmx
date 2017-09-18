@@ -34,6 +34,7 @@
           <Property Name="class" Type="uniqueidentifier" />
           <Property Name="description" Type="varchar" MaxLength="100" />
           <Property Name="color" Type="varchar" MaxLength="7" />
+          <Property Name="userId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="TimeTableBreaks">
           <Key>
@@ -453,6 +454,7 @@
           <NavigationProperty Name="TimeTableSubjects3" Relationship="TeachersBookModel.FK_TimeTableSubjects_Subjects3" FromRole="Subjects" ToRole="TimeTableSubjects" />
           <NavigationProperty Name="TimeTableSubjects4" Relationship="TeachersBookModel.FK_TimeTableSubjects_Subjects4" FromRole="Subjects" ToRole="TimeTableSubjects" />
           <NavigationProperty Name="TimeTableSubjects5" Relationship="TeachersBookModel.FK_TimeTableSubjects_Subjects5" FromRole="Subjects" ToRole="TimeTableSubjects" />
+          <Property Name="userId" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="TimeTableBreaks">
           <Key>
@@ -663,6 +665,7 @@
           <EntitySetMapping Name="Subjects">
             <EntityTypeMapping TypeName="TeachersBookModel.Subjects">
               <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="color" ColumnName="color" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="class" ColumnName="class" />

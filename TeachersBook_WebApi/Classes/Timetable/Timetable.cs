@@ -30,6 +30,7 @@ namespace TeachersBook_WebApi.InternalClasses.Timetable
     {
         List<BLSubjectsRowItem> _subjects;
 
+        public string id { get; set; }
         public string rowType { get; set; }
         public List<BLSubjectsRowItem> subjects
         {
@@ -51,22 +52,27 @@ namespace TeachersBook_WebApi.InternalClasses.Timetable
 
     public class BLSubjectsRowItem
     {
+        public string id { get; set; }
         public int hour { get; set; }
         public int day { get; set; }
-    }
-
-    public class BLSubjects : BLSubjectsRowItem
-    {
         public BLLesson lesson { get; set; }
-    }
-
-    public class BLBreak : BLSubjectsRowItem
-    {
         public string description { get; set; }
     }
 
+    // Wegen Schwirigkeiten bei der Rückgabe an den Webservice als JSON Objekt erstmal wieder eine Klasse daraus gemacht!
+    //public class BLSubjects : BLSubjectsRowItem
+    //{
+    //    public BLLesson lesson { get; set; }
+    //}
+
+    //public class BLBreak : BLSubjectsRowItem
+    //{
+    //    public string description { get; set; }
+    //}
+
     public class BLLesson
     {
+        public string id { get; set; }
         public string name { get; set; }
         public BLClass blClass { get; set; }
         public string color { get; set; }

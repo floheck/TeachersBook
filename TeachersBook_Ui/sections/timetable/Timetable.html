@@ -121,7 +121,7 @@
 	        },
             css : ($index() == 0 ? 'timetable-no-border' : ''),
             visible: labelVisible
-            " class="timetable-subject">
+            ">
             <div class="timetable-subject-text-wrapper" data-bind="css: (hasSubject() === false ? '' : 'has-subject')">
                 <div class="timetable-subject-text">
                     <div class="timetable-subject-name" data-bind='html: content.name'></div> <div class="timetable-subject-class" data-bind="html: content.schoolGrade"></div>
@@ -152,10 +152,14 @@
     <td data-bind="css: (day === 0 ? 'time-cell' : '')">
         <div class="timetabel-subject-container">
             <li class="timetable-subject timetable-no-border" 
-                data-bind="html: content.name,
-                           style: {'background-color' : content.color},
+                data-bind="style: {'background-color' : content.color},
                            click: $root.clickSubjectLabel,
                            visible: labelVisible">
+                <div class="timetable-subject-text-wrapper" data-bind="css: (hasSubject() === false ? '' : 'has-subject')">
+                    <div class="timetable-subject-text">
+                        <div class="timetable-subject-name" data-bind='html: content.name'></div> <div class="timetable-subject-class" data-bind="html: content.schoolGrade"></div>
+                    </div>
+                </div>
             </li>
             <div class="timetable-inline-edit-wrapper" data-bind="visible: inlineEditingVisible">
                 <input type="text" data-bind="value: content.name, attr: {'id': 'txt_' + hour + '_' + day}" class="timetable-hour-time-textbox" />

@@ -8,7 +8,7 @@
 			sectionMenu: "Stundenplan",
 			sectionMenuFontAwsome: "fa fa-table"
 		}
-	];
+    ];
 
 	TeachersBook.SectionLoader.init();
 

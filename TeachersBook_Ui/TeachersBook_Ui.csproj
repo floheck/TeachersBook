@@ -53,6 +53,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="libraries\modal-wait\modal-wait.js" />
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
     <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
@@ -143,7 +144,9 @@
     <None Include="libraries\colorpicker2.5.1\css\bootstrap-colorpicker.css.map" />
     <None Include="libraries\colorpicker2.5.1\css\bootstrap-colorpicker.min.css.map" />
     <None Include="libraries\colorpicker2.5.1\img\.DS_Store" />
-    <None Include="sections\timetable\Timetable.json" />
+    <Content Include="sections\timetable\Timetable.json.js" />
+    <Content Include="scripts\TeachersBook.Helper.js" />
+    <None Include="TeachersBookFrontEnd - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

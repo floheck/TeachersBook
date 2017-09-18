@@ -38,10 +38,9 @@
                             var id = sectionIdPrefix + element.section;
                             var sectionHtmlPath = element.sectionPath + element.section + ".html";
                             var sectionScriptPath = element.sectionPath + element.section + ".js";
-                            var sectionTranslationPath = element.sectionPath + element.section + ".json";
+                            var sectionTranslationPath = element.sectionPath + element.section + ".json.js";
 
-			    jQuery("#sidbarNavItems").append("<li><a href='#'" + element.section + "><i class='" + element.sectionMenuFontAwsome + "' aria-hidden='true'></i><span style='margin-left:10px;'>" + element.sectionMenu + "</span></a></li>");
-                            ;
+			                jQuery("#sidbarNavItems").append("<li><a href='#'" + element.section + "><i class='" + element.sectionMenuFontAwsome + "' aria-hidden='true'></i><span style='margin-left:10px;'>" + element.sectionMenu + "</span></a></li>");
                             jQuery("#sections").append("<div id='" + id + "' class='content-section'></div>");
                                 
                             var sectionContentRequest = jQuery.ajax({

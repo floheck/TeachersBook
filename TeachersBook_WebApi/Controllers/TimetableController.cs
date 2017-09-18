@@ -11,14 +11,7 @@ namespace TeachersBook_WebApi.Controllers
 {
     public class TimetableController : ApiController
     {
-        //[AllowAnonymous]
-        //[HttpGet]
-        //[Route("api/Timetable/forall")]
-        //public IHttpActionResult Get()
-        //{
-        //    return Ok("Now server time is: " + DateTime.Now.ToString());
-        //}
-
+        
         [Authorize]
         [HttpGet]
         [Route("api/Timetable/getComplete")]
@@ -42,8 +35,9 @@ namespace TeachersBook_WebApi.Controllers
                 foreach(var timetablerow in timetabel.TimeTableRows.OrderBy(x => x.lessonNo))
                 {
                     BLSubjectsRow newRow = new BLSubjectsRow();
+                    newRow.id = timetablerow.id.ToString();
                     newRow.rowType = timetablerow.rowType;
-                    if (timetablerow.rowType == "lesson")
+                    if (timetablerow.rowType == "subjects")
                     {
                         CreateLessonsRow(timetablerow, newRow);
                     }
@@ -62,14 +56,14 @@ namespace TeachersBook_WebApi.Controllers
         #region Create break row
         private static void CreateBreaksRow(TimeTableRows timetablerow, BLSubjectsRow newRow)
         {
-            BLBreak rowDesc = CreateRowDesc(timetablerow);
-            BLBreak breakMon = CreateBreakMon(timetablerow);
-            BLBreak breakTue = CreateBreakTue(timetablerow);
-            BLBreak breakWed = CreateBreakWed(timetablerow);
-            BLBreak breakThu = CreateBreakThu(timetablerow);
-            BLBreak breakFri = CreateBreakFri(timetablerow);
-            BLBreak breakSat = CreateBreakSat(timetablerow);
-
+            BLSubjectsRowItem rowDesc = CreateRowDesc(timetablerow);
+            BLSubjectsRowItem breakMon = CreateBreakMon(timetablerow);
+            BLSubjectsRowItem breakTue = CreateBreakTue(timetablerow);
+            BLSubjectsRowItem breakWed = CreateBreakWed(timetablerow);
+            BLSubjectsRowItem breakThu = CreateBreakThu(timetablerow);
+            BLSubjectsRowItem breakFri = CreateBreakFri(timetablerow);
+            BLSubjectsRowItem breakSat = CreateBreakSat(timetablerow);
+            
             newRow.subjects.Add(rowDesc);
             newRow.subjects.Add(breakMon);
             newRow.subjects.Add(breakTue);
@@ -79,66 +73,72 @@ namespace TeachersBook_WebApi.Controllers
             newRow.subjects.Add(breakSat);
         }
 
-        private static BLBreak CreateBreakMon(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateBreakMon(TimeTableRows timetablerow)
         {
-            BLBreak TeachersBookBreak = new BLBreak();
+            BLSubjectsRowItem TeachersBookBreak = new BLSubjectsRowItem();
+            TeachersBookBreak.id = timetablerow.TimeTableBreaks1.id.ToString();
             TeachersBookBreak.day = 1;
             TeachersBookBreak.hour = timetablerow.lessonNo;
             TeachersBookBreak.description = timetablerow.TimeTableBreaks1.mon;
             return TeachersBookBreak;
         }
 
-        private static BLBreak CreateBreakTue(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateBreakTue(TimeTableRows timetablerow)
         {
-            BLBreak TeachersBookBreak = new BLBreak();
+            BLSubjectsRowItem TeachersBookBreak = new BLSubjectsRowItem();
+            TeachersBookBreak.id = timetablerow.TimeTableBreaks1.id.ToString();
             TeachersBookBreak.day = 2;
             TeachersBookBreak.hour = timetablerow.lessonNo;
             TeachersBookBreak.description = timetablerow.TimeTableBreaks1.tue;
             return TeachersBookBreak;
         }
 
-        private static BLBreak CreateBreakWed(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateBreakWed(TimeTableRows timetablerow)
         {
-            BLBreak TeachersBookBreak = new BLBreak();
+            BLSubjectsRowItem TeachersBookBreak = new BLSubjectsRowItem();
+            TeachersBookBreak.id = timetablerow.TimeTableBreaks1.id.ToString();
             TeachersBookBreak.day = 3;
             TeachersBookBreak.hour = timetablerow.lessonNo;
             TeachersBookBreak.description = timetablerow.TimeTableBreaks1.wed;
             return TeachersBookBreak;
         }
 
-        private static BLBreak CreateBreakThu(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateBreakThu(TimeTableRows timetablerow)
         {
-            BLBreak TeachersBookBreak = new BLBreak();
+            BLSubjectsRowItem TeachersBookBreak = new BLSubjectsRowItem();
+            TeachersBookBreak.id = timetablerow.TimeTableBreaks1.id.ToString();
             TeachersBookBreak.day = 4;
             TeachersBookBreak.hour = timetablerow.lessonNo;
             TeachersBookBreak.description = timetablerow.TimeTableBreaks1.thu;
             return TeachersBookBreak;
         }
 
-        private static BLBreak CreateBreakFri(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateBreakFri(TimeTableRows timetablerow)
         {
-            BLBreak TeachersBookBreak = new BLBreak();
+            BLSubjectsRowItem TeachersBookBreak = new BLSubjectsRowItem();
+            TeachersBookBreak.id = timetablerow.TimeTableBreaks1.id.ToString();
             TeachersBookBreak.day = 5;
             TeachersBookBreak.hour = timetablerow.lessonNo;
             TeachersBookBreak.description = timetablerow.TimeTableBreaks1.fri;
             return TeachersBookBreak;
         }
 
-        private static BLBreak CreateBreakSat(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateBreakSat(TimeTableRows timetablerow)
         {
-            BLBreak TeachersBookBreak = new BLBreak();
+            BLSubjectsRowItem TeachersBookBreak = new BLSubjectsRowItem();
+            TeachersBookBreak.id = timetablerow.TimeTableBreaks1.id.ToString();
             TeachersBookBreak.day = 6;
             TeachersBookBreak.hour = timetablerow.lessonNo;
             TeachersBookBreak.description = timetablerow.TimeTableBreaks1.sat;
             return TeachersBookBreak;
         }
 
-        private static BLBreak CreateRowDesc(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateRowDesc(TimeTableRows timetablerow)
         {
-            BLBreak TeachersBookBreak = new BLBreak();
+            BLSubjectsRowItem TeachersBookBreak = new BLSubjectsRowItem();
             TeachersBookBreak.day = 0;
             TeachersBookBreak.hour = timetablerow.lessonNo;
-            TeachersBookBreak.description = timetablerow.rowType == "lesson" ? timetablerow.time : "break";
+            TeachersBookBreak.description = timetablerow.time;
 
             return TeachersBookBreak;
         }
@@ -149,14 +149,15 @@ namespace TeachersBook_WebApi.Controllers
 
         private static void CreateLessonsRow(TimeTableRows timetablerow, BLSubjectsRow newRow)
         {
-            BLBreak rowDesc = CreateRowDesc(timetablerow);
-            BLSubjects subjectMon = CreateSubjectMon(timetablerow);
-            BLSubjects subjectTue = CreateSubjectTue(timetablerow);
-            BLSubjects subjectWed = CreateSubjectWed(timetablerow);
-            BLSubjects subjectThu = CreateSubjectThu(timetablerow);
-            BLSubjects subjectFri = CreateSubjectFri(timetablerow);
-            BLSubjects subjectSat = CreateSubjectSat(timetablerow);
+            BLSubjectsRowItem rowDesc = CreateRowDesc(timetablerow);
+            BLSubjectsRowItem subjectMon = CreateSubjectMon(timetablerow);
+            BLSubjectsRowItem subjectTue = CreateSubjectTue(timetablerow);
+            BLSubjectsRowItem subjectWed = CreateSubjectWed(timetablerow);
+            BLSubjectsRowItem subjectThu = CreateSubjectThu(timetablerow);
+            BLSubjectsRowItem subjectFri = CreateSubjectFri(timetablerow);
+            BLSubjectsRowItem subjectSat = CreateSubjectSat(timetablerow);
 
+            newRow.id = timetablerow.id.ToString();
             newRow.subjects.Add(rowDesc);
             newRow.subjects.Add(subjectMon);
             newRow.subjects.Add(subjectTue);
@@ -166,78 +167,90 @@ namespace TeachersBook_WebApi.Controllers
             newRow.subjects.Add(subjectSat);
         }
 
-        private static BLSubjects CreateSubjectMon(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateSubjectMon(TimeTableRows timetablerow)
         {
-            BLSubjects subject = new BLSubjects();
+            BLSubjectsRowItem subject = new BLSubjectsRowItem();
+            subject.id = timetablerow.TimeTableSubjects1.id.ToString();
             subject.day = 1;
             subject.hour = timetablerow.lessonNo;
 
             BLLesson lesson = new BLLesson();
+            lesson.id = timetablerow.TimeTableSubjects1.Subjects != null ? timetablerow.TimeTableSubjects1.Subjects.id.ToString() : null;
             lesson.name = timetablerow.TimeTableSubjects1.Subjects != null ? timetablerow.TimeTableSubjects1.Subjects.description : null;
             lesson.color = timetablerow.TimeTableSubjects1.Subjects != null ? timetablerow.TimeTableSubjects1.Subjects.color : null;
             subject.lesson = lesson;
             return subject;
         }
 
-        private static BLSubjects CreateSubjectTue(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateSubjectTue(TimeTableRows timetablerow)
         {
-            BLSubjects subject = new BLSubjects();
+            BLSubjectsRowItem subject = new BLSubjectsRowItem();
+            subject.id = timetablerow.TimeTableSubjects1.id.ToString();
             subject.day = 2;
             subject.hour = timetablerow.lessonNo;
 
             BLLesson lesson = new BLLesson();
+            lesson.id = timetablerow.TimeTableSubjects1.Subjects1 != null ? timetablerow.TimeTableSubjects1.Subjects1.id.ToString() : null;
             lesson.name = timetablerow.TimeTableSubjects1.Subjects1 != null ? timetablerow.TimeTableSubjects1.Subjects1.description : null;
             lesson.color = timetablerow.TimeTableSubjects1.Subjects1 != null ? timetablerow.TimeTableSubjects1.Subjects1.color : null;
             subject.lesson = lesson;
             return subject;
         }
 
-        private static BLSubjects CreateSubjectWed(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateSubjectWed(TimeTableRows timetablerow)
         {
-            BLSubjects subject = new BLSubjects();
+            BLSubjectsRowItem subject = new BLSubjectsRowItem();
+            subject.id = timetablerow.TimeTableSubjects1.id.ToString();
             subject.day = 3;
             subject.hour = timetablerow.lessonNo;
 
             BLLesson lesson = new BLLesson();
+            lesson.id = timetablerow.TimeTableSubjects1.Subjects2 != null ? timetablerow.TimeTableSubjects1.Subjects2.id.ToString() : null;
             lesson.name = timetablerow.TimeTableSubjects1.Subjects2 != null ? timetablerow.TimeTableSubjects1.Subjects2.description : null;
             lesson.color = timetablerow.TimeTableSubjects1.Subjects2 != null ? timetablerow.TimeTableSubjects1.Subjects2.color : null;
             subject.lesson = lesson;
             return subject;
         }
 
-        private static BLSubjects CreateSubjectThu(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateSubjectThu(TimeTableRows timetablerow)
         {
-            BLSubjects subject = new BLSubjects();
+            BLSubjectsRowItem subject = new BLSubjectsRowItem();
+            subject.id = timetablerow.TimeTableSubjects1.id.ToString();
             subject.day = 4;
             subject.hour = timetablerow.lessonNo;
 
             BLLesson lesson = new BLLesson();
+            lesson.id = timetablerow.TimeTableSubjects1.Subjects3 != null ? timetablerow.TimeTableSubjects1.Subjects3.id.ToString() : null;
             lesson.name = timetablerow.TimeTableSubjects1.Subjects3 != null ? timetablerow.TimeTableSubjects1.Subjects3.description : null;
             lesson.color = timetablerow.TimeTableSubjects1.Subjects3 != null ? timetablerow.TimeTableSubjects1.Subjects3.color : null;
             subject.lesson = lesson;
             return subject;
         }
 
-        private static BLSubjects CreateSubjectFri(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateSubjectFri(TimeTableRows timetablerow)
         {
-            BLSubjects subject = new BLSubjects();
+            BLSubjectsRowItem subject = new BLSubjectsRowItem();
+            subject.id = timetablerow.TimeTableSubjects1.id.ToString();
             subject.day = 5;
             subject.hour = timetablerow.lessonNo;
 
             BLLesson lesson = new BLLesson();
+            lesson.id = timetablerow.TimeTableSubjects1.Subjects4 != null ? timetablerow.TimeTableSubjects1.Subjects4.id.ToString() : null;
             lesson.name = timetablerow.TimeTableSubjects1.Subjects4 != null ? timetablerow.TimeTableSubjects1.Subjects4.description : null;
             lesson.color = timetablerow.TimeTableSubjects1.Subjects4 != null ? timetablerow.TimeTableSubjects1.Subjects4.color: null;
             subject.lesson = lesson;
             return subject;
         }
 
-        private static BLSubjects CreateSubjectSat(TimeTableRows timetablerow)
+        private static BLSubjectsRowItem CreateSubjectSat(TimeTableRows timetablerow)
         {
-            BLSubjects subject = new BLSubjects();
+            BLSubjectsRowItem subject = new BLSubjectsRowItem();
+            subject.id = timetablerow.TimeTableSubjects1.id.ToString();
             subject.day = 6;
             subject.hour = timetablerow.lessonNo;
 
             BLLesson lesson = new BLLesson();
+            lesson.id = timetablerow.TimeTableSubjects1.Subjects5 != null ? timetablerow.TimeTableSubjects1.Subjects5.id.ToString() : null;
             lesson.name = timetablerow.TimeTableSubjects1.Subjects5 != null ? timetablerow.TimeTableSubjects1.Subjects5.description : null;
             lesson.color = timetablerow.TimeTableSubjects1.Subjects5 != null ? timetablerow.TimeTableSubjects1.Subjects5.color : null;
             subject.lesson = lesson;
@@ -245,6 +258,48 @@ namespace TeachersBook_WebApi.Controllers
         }
 
         #endregion
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/Timetable/getAllSubjects")]
+        public IHttpActionResult GetAllSubjects()
+        {
+            using (var ctx = new TeachersBookEntities2())
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var id = ((ClaimsIdentity)User.Identity).FindFirst("id");
+
+                var returnObj = new List<BLLesson>();
+
+                var subjectsQuery =
+                    from u in ctx.Subjects
+                    where u.userId.ToString() == id.Value.ToString()
+                    select u;
+
+                var subjects = subjectsQuery.ToList<Subjects>();
+
+                foreach (var subject in subjects.OrderBy(x => x.description))
+                {
+                    BLLesson subjectToAdd = new BLLesson();
+                    subjectToAdd.id = subject.id.ToString();
+                    subjectToAdd.name = subject.description;
+                    subjectToAdd.color = subject.color;
+
+                    returnObj.Add(subjectToAdd);
+                }
+
+                return Ok(returnObj);
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("api/Timetable/setAllSubjects")]
+        public HttpResponseMessage SetAllSubjects([FromBody] BLTimetable timetable )
+        {
+
+            return Request.CreateResponse(HttpStatusCode.OK, "success");
+        }
 
         [Authorize(Roles = "admin")]
         [HttpGet]
