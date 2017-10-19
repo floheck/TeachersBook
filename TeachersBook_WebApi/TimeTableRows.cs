@@ -14,16 +14,20 @@ namespace TeachersBook_WebApi
     
     public partial class TimeTableRows
     {
-        public System.Guid id { get; set; }
-        public System.Guid timeTable { get; set; }
-        public string rowType { get; set; }
-        public int lessonNo { get; set; }
-        public Nullable<System.Guid> timeTableSubjects { get; set; }
-        public Nullable<System.Guid> timeTableBreaks { get; set; }
-        public string time { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TimeTableRows()
+        {
+            this.TimeTableIItems = new HashSet<TimeTableIItems>();
+        }
     
-        public virtual TimeTableBreaks TimeTableBreaks1 { get; set; }
+        public System.Guid id { get; set; }
+        public Nullable<System.Guid> timetable { get; set; }
+        public string start { get; set; }
+        public string end { get; set; }
+        public Nullable<int> rowNo { get; set; }
+    
         public virtual TimeTables TimeTables { get; set; }
-        public virtual TimeTableSubjects TimeTableSubjects1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TimeTableIItems> TimeTableIItems { get; set; }
     }
 }

@@ -14,6 +14,12 @@ namespace TeachersBook_WebApi
     
     public partial class Pupils
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Pupils()
+        {
+            this.Ratings = new HashSet<Ratings>();
+        }
+    
         public System.Guid id { get; set; }
         public string nickName { get; set; }
         public string firstName { get; set; }
@@ -24,5 +30,7 @@ namespace TeachersBook_WebApi
         public System.Guid @class { get; set; }
     
         public virtual Classes Classes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ratings> Ratings { get; set; }
     }
 }

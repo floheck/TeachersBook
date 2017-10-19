@@ -17,22 +17,22 @@ namespace TeachersBook_WebApi
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserData()
         {
-            this.TimeTables = new HashSet<TimeTables>();
             this.Classes = new HashSet<Classes>();
+            this.SchoolYears = new HashSet<SchoolYears>();
         }
     
         public System.Guid id { get; set; }
         public string username { get; set; }
+        public string password { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
         public string email { get; set; }
         public bool isActive { get; set; }
         public string role { get; set; }
-        public string password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeTables> TimeTables { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Classes> Classes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SchoolYears> SchoolYears { get; set; }
     }
 }

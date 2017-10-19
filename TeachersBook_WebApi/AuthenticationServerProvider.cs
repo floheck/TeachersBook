@@ -25,7 +25,7 @@ namespace TeachersBook_WebApi
                     where u.username == context.UserName
                     select u;
 
-                var user = userQuery.FirstOrDefault<UserData>();
+                var user = userQuery.FirstOrDefault();
 
                 if (user != null)
                 {

@@ -1,0 +1,24 @@
+{
+  "name": "coparion-sharepoint",
+  "version": "1.0.0",
+  "description": "coparion SharePoint DealFlowManagement",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "KI performance GmbH",
+  "license": "ISC",
+  "dependencies": {
+    "@types/knockout.validation": "0.0.34",
+    "bluebird": "^3.5.0",
+    "gentelella": "^1.3.0",
+    "knockout.validation": "^2.0.3",
+    "systemjs": "0.20.18"
+  },
+  "devDependencies": {
+    "@types/jquery": "^1.10.2",
+    "@types/knockout": "^3.4.41",
+    "@types/bootstrap": "^3.0.0",
+    "@types/systemjs": "^0.20.3"
+  }
+}

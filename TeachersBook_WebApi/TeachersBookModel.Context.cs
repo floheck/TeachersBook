@@ -25,13 +25,17 @@ namespace TeachersBook_WebApi
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Breaks> Breaks { get; set; }
         public virtual DbSet<Classes> Classes { get; set; }
+        public virtual DbSet<Lists> Lists { get; set; }
         public virtual DbSet<Pupils> Pupils { get; set; }
+        public virtual DbSet<Ratings> Ratings { get; set; }
+        public virtual DbSet<SchoolYears> SchoolYears { get; set; }
+        public virtual DbSet<Subjects> Subjects { get; set; }
+        public virtual DbSet<TimeTableIItems> TimeTableIItems { get; set; }
+        public virtual DbSet<TimeTableRows> TimeTableRows { get; set; }
         public virtual DbSet<TimeTables> TimeTables { get; set; }
         public virtual DbSet<UserData> UserData { get; set; }
-        public virtual DbSet<Subjects> Subjects { get; set; }
-        public virtual DbSet<TimeTableBreaks> TimeTableBreaks { get; set; }
-        public virtual DbSet<TimeTableRows> TimeTableRows { get; set; }
-        public virtual DbSet<TimeTableSubjects> TimeTableSubjects { get; set; }
+        public virtual DbSet<SubjectToTimeTableHours> SubjectToTimeTableHours { get; set; }
     }
 }

@@ -1,0 +1,44 @@
+﻿.parallax {
+  /* Set a specific height */
+  min-height: 200px;
+}
+.time-table {
+  background-image: url("../content/images/stundenplan1.jpg");
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: 28px;
+}
+.rate {
+  background-image: url("../content/images/bewerten.jpg");
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.content-wrapper {
+  float: right;
+  margin-left: 40px;
+  width: 100%;
+}
+.content-timetable {
+  background-color: #f9f8f2;
+  font-size: 1.0em;
+  padding: 15px;
+  min-height: calc(-100vh);
+}
+.mandatoryFieldNotFilled {
+  background-color: #ff7070;
+}
+/* bootstrap overwrites */
+.red-tooltip + .tooltip > .tooltip-inner {
+  background-color: #7a703c;
+}
+.teachersbook-modal-header {
+  background-color: #ECE0A3;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}

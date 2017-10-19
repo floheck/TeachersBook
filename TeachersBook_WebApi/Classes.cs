@@ -17,15 +17,21 @@ namespace TeachersBook_WebApi
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Classes()
         {
+            this.Lists = new HashSet<Lists>();
             this.Pupils = new HashSet<Pupils>();
+            this.Subjects = new HashSet<Subjects>();
         }
     
         public System.Guid id { get; set; }
         public string name { get; set; }
         public System.Guid teacher { get; set; }
     
+        public virtual UserData UserData { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lists> Lists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pupils> Pupils { get; set; }
-        public virtual UserData UserData { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Subjects> Subjects { get; set; }
     }
 }

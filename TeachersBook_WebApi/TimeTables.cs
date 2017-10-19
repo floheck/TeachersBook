@@ -21,9 +21,9 @@ namespace TeachersBook_WebApi
         }
     
         public System.Guid id { get; set; }
-        public System.Guid teacher { get; set; }
+        public System.Guid schoolYear { get; set; }
     
-        public virtual UserData UserData { get; set; }
+        public virtual SchoolYears SchoolYears { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TimeTableRows> TimeTableRows { get; set; }
     }

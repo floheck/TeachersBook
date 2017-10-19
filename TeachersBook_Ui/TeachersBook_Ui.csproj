@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <PropertyGroup>
+    <SSDTUnitTestPath Condition="'$(SSDTUnitTestPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB</SSDTUnitTestPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SSDTPath Condition="'$(SSDTPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\130</SSDTPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -39,6 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -54,6 +62,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libraries\modal-wait\modal-wait.js" />
+    <Content Include="libraries\requirejs\require.js" />
+    <Content Include="libraries\systemjs\dist\system-production.js" />
+    <Content Include="libraries\systemjs\dist\system-production.src.js" />
+    <Content Include="libraries\systemjs\dist\system.js" />
+    <Content Include="libraries\systemjs\dist\system.src.js" />
+    <Content Include="scripts\dataInterface.js" />
+    <Content Include="scripts\helper.js" />
+    <Content Include="scripts\init.js" />
+    <Content Include="scripts\model\lesson.js" />
+    <Content Include="scripts\model\tbClass.js" />
+    <Content Include="scripts\model\timetable.js" />
+    <Content Include="scripts\sectionLoader.js" />
+    <Content Include="scripts\sections.js" />
+    <Content Include="system.config.js" />
+    <Content Include="scripts\viewModels\sectionTimetableViewModel.js" />
+    <Content Include="scripts\viewModels\timetableRowViewModel.js" />
+    <Content Include="scripts\viewModels\timetableSubjectContentViewModel.js" />
+    <Content Include="scripts\viewModels\timetableSubjectViewModel.js" />
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
     <Content Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
@@ -84,16 +110,28 @@
     <Content Include="libraries\fontawesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="libraries\fontawesome\fonts\fontawesome-webfont.woff" />
     <Content Include="styles\homepage.css" />
-    <Content Include="content\images\stundenplan1.jpg" />
-    <Content Include="content\images\bewerten.jpg" />
+    <Content Include="content\images\stundenplan1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="content\images\bewerten.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="scripts\dragAndDrop.js" />
     <Content Include="scripts\index.js" />
     <Content Include="scripts\TeachersBook.ModuleLoader.js" />
-    <Content Include="content\data\TeachersBook.Configuration.js" />
-    <Content Include="sections\timetable\Timetable.html" />
-    <Content Include="sections\timetable\Timetable.js" />
+    <Content Include="content\data\TeachersBook.Configuration.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sections\timetable\Timetable.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sections\timetable\Timetable.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="scripts\TeachersBook.Resource.js" />
-    <Content Include="sections\timetable\Timetable.css" />
+    <Content Include="sections\timetable\Timetable.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="libraries\knockout\knockout-sortable.js" />
     <Content Include="libraries\jquery-ui-1.12.1\index.html" />
     <Content Include="libraries\jquery-ui-1.12.1\jquery-ui.css" />
@@ -127,7 +165,25 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <TypeScriptCompile Include="scripts\dataInterface.ts" />
+    <TypeScriptCompile Include="scripts\helper.ts" />
+    <TypeScriptCompile Include="scripts\init.ts" />
+    <TypeScriptCompile Include="scripts\model\lesson.ts" />
+    <TypeScriptCompile Include="scripts\model\tbClass.ts" />
+    <TypeScriptCompile Include="scripts\model\timetable.ts" />
+    <TypeScriptCompile Include="scripts\sectionLoader.ts" />
+    <TypeScriptCompile Include="scripts\sections.ts" />
+    <TypeScriptCompile Include="system.config.ts" />
+    <TypeScriptCompile Include="scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\knockout\tests\jasmine.extensions.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\systemjs\systemjs-0.18.4.d.ts" />
+    <TypeScriptCompile Include="scripts\viewModels\sectionTimetableViewModel.ts" />
+    <TypeScriptCompile Include="scripts\viewModels\timetableRowViewModel.ts" />
+    <TypeScriptCompile Include="scripts\viewModels\timetableSubjectContentViewModel.ts" />
+    <TypeScriptCompile Include="scripts\viewModels\timetableSubjectViewModel.ts" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\.DS_Store" />
     <None Include="libraries\bootstrap\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
@@ -144,15 +200,58 @@
     <None Include="libraries\colorpicker2.5.1\css\bootstrap-colorpicker.css.map" />
     <None Include="libraries\colorpicker2.5.1\css\bootstrap-colorpicker.min.css.map" />
     <None Include="libraries\colorpicker2.5.1\img\.DS_Store" />
-    <Content Include="sections\timetable\Timetable.json.js" />
+    <Content Include="sections\timetable\Timetable.json.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="scripts\TeachersBook.Helper.js" />
+    <Content Include="scripts\model\lesson.js.map" />
+    <Content Include="scripts\model\tbClass.js.map" />
+    <Content Include="scripts\model\timetable.js.map" />
+    <Content Include="packages.config" />
+    <Content Include="scripts\dataInterface.js.map" />
+    <Content Include="scripts\helper.js.map" />
+    <Content Include="scripts\sectionLoader.js.map" />
+    <Content Include="scripts\sections.js.map" />
+    <Content Include="scripts\viewModels\timetableRowViewModel.js.map" />
+    <Content Include="scripts\viewModels\timetableSubjectViewModel.js.map" />
+    <Content Include="scripts\viewModels\sectionTimetableViewModel.js.map" />
+    <Content Include="scripts\viewModels\timetableSubjectContentViewModel.js.map" />
+    <Content Include="scripts\init.js.map" />
+    <Content Include="tsconfig.json" />
+    <Content Include="libraries\systemjs\dist\system-production.js.map" />
+    <Content Include="libraries\systemjs\dist\system-production.src.js.map" />
+    <Content Include="libraries\systemjs\dist\system.js.map" />
+    <Content Include="libraries\systemjs\dist\system.src.js.map" />
+    <Content Include="libraries\systemjs\LICENSE" />
+    <Content Include="libraries\systemjs\package.json" />
+    <Content Include="libraries\systemjs\README.md" />
+    <Content Include="system.config.js.map" />
     <None Include="TeachersBookFrontEnd - Web Deploy.pubxml" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup Condition="$(VisualStudioVersion) == '15.0'">
+    <Reference Include="Microsoft.Data.Tools.Schema.Sql, Version=13.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>$(SSDTPath)\Microsoft.Data.Tools.Schema.Sql.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Schema.Sql.UnitTesting, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>$(SSDTUnitTestPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Schema.Sql.UnitTestingAdapter, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>$(SSDTUnitTestPath)\Microsoft.Data.Tools.Schema.Sql.UnitTestingAdapter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
@@ -178,4 +277,9 @@
   </ProjectExtensions>
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <PropertyGroup>
+    <SsdtUnitTestVersion>3.1</SsdtUnitTestVersion>
+  </PropertyGroup>
+  <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' == ''" />
 </Project>

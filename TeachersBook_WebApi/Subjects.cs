@@ -17,31 +17,21 @@ namespace TeachersBook_WebApi
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Subjects()
         {
-            this.TimeTableSubjects = new HashSet<TimeTableSubjects>();
-            this.TimeTableSubjects1 = new HashSet<TimeTableSubjects>();
-            this.TimeTableSubjects2 = new HashSet<TimeTableSubjects>();
-            this.TimeTableSubjects3 = new HashSet<TimeTableSubjects>();
-            this.TimeTableSubjects4 = new HashSet<TimeTableSubjects>();
-            this.TimeTableSubjects5 = new HashSet<TimeTableSubjects>();
+            this.Ratings = new HashSet<Ratings>();
+            this.SubjectToTimeTableHours = new HashSet<SubjectToTimeTableHours>();
         }
     
         public System.Guid id { get; set; }
         public Nullable<System.Guid> @class { get; set; }
         public string description { get; set; }
         public string color { get; set; }
-        public System.Guid userId { get; set; }
+        public System.Guid schoolYearId { get; set; }
     
+        public virtual Classes Classes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeTableSubjects> TimeTableSubjects { get; set; }
+        public virtual ICollection<Ratings> Ratings { get; set; }
+        public virtual SchoolYears SchoolYears { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeTableSubjects> TimeTableSubjects1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeTableSubjects> TimeTableSubjects2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeTableSubjects> TimeTableSubjects3 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeTableSubjects> TimeTableSubjects4 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeTableSubjects> TimeTableSubjects5 { get; set; }
+        public virtual ICollection<SubjectToTimeTableHours> SubjectToTimeTableHours { get; set; }
     }
 }
