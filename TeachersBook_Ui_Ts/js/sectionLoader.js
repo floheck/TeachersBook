@@ -36,17 +36,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var sectionTimetableViewModel_1 = require("./viewModels/sectionTimetableViewModel");
+var cultureSpecificTexts_1 = require("./model/cultureSpecificTexts");
 var SectionLoader = (function () {
     function SectionLoader() {
     }
     SectionLoader.prototype.init = function (sections) {
         return __awaiter(this, void 0, void 0, function () {
-            var configLink, sectionIdPrefix, config, _i, sections_1, section, sectionHtmlPath, sectionScriptPath, sectionTranslationPath, sectionContent, sectionTranslation;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var configLink, sectionIdPrefix, sectionTexts, config, _i, sections_1, section, sectionHtmlPath, sectionScriptPath, sectionTranslationPath, sectionContent, sectionTranslation, userLang, _a, _b, languageItem, textItem, _c, _d, languageItem, textItem;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
                     case 0:
                         configLink = "../content/data/TeachersBook.Configuration.js";
                         sectionIdPrefix = "sec-";
+                        sectionTexts = new cultureSpecificTexts_1.CultureSpecificTexts();
                         return [4 /*yield*/, jQuery.ajax({
                                 url: configLink,
                                 dataType: "json",
@@ -54,9 +56,9 @@ var SectionLoader = (function () {
                                 async: false
                             })];
                     case 1:
-                        config = _a.sent();
+                        config = _e.sent();
                         _i = 0, sections_1 = sections;
-                        _a.label = 2;
+                        _e.label = 2;
                     case 2:
                         if (!(_i < sections_1.length)) return [3 /*break*/, 6];
                         section = sections_1[_i];
@@ -69,17 +71,39 @@ var SectionLoader = (function () {
                                 cache: false
                             })];
                     case 3:
-                        sectionContent = _a.sent();
+                        sectionContent = _e.sent();
                         return [4 /*yield*/, jQuery.ajax({
                                 url: sectionTranslationPath,
                                 dataType: "json",
                                 cache: false
                             })];
                     case 4:
-                        sectionTranslation = _a.sent();
+                        sectionTranslation = _e.sent();
+                        userLang = navigator.language;
+                        switch (userLang) {
+                            case "de":
+                                for (_a = 0, _b = sectionTranslation["de"]; _a < _b.length; _a++) {
+                                    languageItem = _b[_a];
+                                    textItem = new cultureSpecificTexts_1.Texts();
+                                    textItem.id = languageItem.id;
+                                    textItem.text = languageItem.text;
+                                    sectionTexts.texts.push(textItem);
+                                }
+                                break;
+                            default:
+                                for (_c = 0, _d = sectionTranslation["en"]; _c < _d.length; _c++) {
+                                    languageItem = _d[_c];
+                                    textItem = new cultureSpecificTexts_1.Texts();
+                                    textItem.id = languageItem.id;
+                                    textItem.text = languageItem.text;
+                                    sectionTexts.texts.push(textItem);
+                                }
+                                break;
+                        }
+                        console.log(sectionTexts);
                         jQuery("#" + section.id).html(sectionContent);
-                        this.initSectionViewModel(section);
-                        _a.label = 5;
+                        this.initSectionViewModel(section, sectionTexts);
+                        _e.label = 5;
                     case 5:
                         _i++;
                         return [3 /*break*/, 2];
@@ -88,13 +112,13 @@ var SectionLoader = (function () {
             });
         });
     };
-    SectionLoader.prototype.initSectionViewModel = function (section) {
+    SectionLoader.prototype.initSectionViewModel = function (section, translations) {
         return __awaiter(this, void 0, void 0, function () {
             var viewModel;
             return __generator(this, function (_a) {
                 switch (section.name) {
                     case "Timetable":
-                        viewModel = new sectionTimetableViewModel_1.SectionTimetableViewModel();
+                        viewModel = new sectionTimetableViewModel_1.SectionTimetableViewModel(translations);
                         ko.applyBindings(viewModel, jQuery("#" + section.id)[0]);
                         break;
                 }

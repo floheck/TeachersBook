@@ -1,33 +1,35 @@
 ﻿import { Timetable, SubjectRow, SubjectRowItem } from "../model/timetable";
 import { Lesson } from "../model/lesson";
 import { TbClass } from "../model/tbClass";
+import { CultureSpecificTexts } from "../model/cultureSpecificTexts";
 import { DataInterface } from "../dataInterface";
 import { TimetableRowViewModel } from "./timetableRowViewModel";
 import { TimetableSubjectViewModel } from "./timetableSubjectViewModel";
 import { TimetableSubjectContentViewModel } from "./timetableSubjectContentViewModel";
-import { Helper } from "../helper"
+import { Helper } from "../helper";
 
 export class SubjectAdministrationViewModel {
-    constructor() {
+    constructor(texts: CultureSpecificTexts) {
+        this.addNewSubjectDialogViewModel = new AddNewSubjectModalDialogViewModel(texts);
         this.fromModel();
     }
 
+    private _texts = new CultureSpecificTexts();
+
+    public addNewSubjectDialogViewModel: AddNewSubjectModalDialogViewModel = null;
+
     public subjects = ko.observableArray<TimetableSubjectContentViewModel>();
-
-    newSubjectName = ko.observable<string>();
-    newSubjectSchoolGrade = ko.observable<string>();
-    newSubjectColor = ko.observable<string>("#00AABB");
-
+    
     public async fromModel(): Promise<void> {
         try {
             let subjectsModelArray = await DataInterface.getAllSubjects("2017/2018");
-
+            
             for (let row of subjectsModelArray) {
                 let subject = new TimetableSubjectContentViewModel();
                 subject.id(row.id);
                 subject.name(row.name);
                 subject.color("#" + row.color);
-                subject.schoolGrade(null);
+                subject.schoolGrade(row.tbClass.name);
                 this.subjects.push(subject);
             }
         }
@@ -36,29 +38,23 @@ export class SubjectAdministrationViewModel {
         }
     }
 
-    activateTooltips() {
-        jQuery('[data-toggle="tooltip"]').tooltip();
-    }
-
-    openAddNewSubjectDialog() {
-        jQuery("#modal-AddSubject").modal("show");
-        this.newSubjectName("");
-        this.newSubjectSchoolGrade("");
-        this.newSubjectColor("#00AABB");
-    }
-
-    addNewSubject() {
+    addNewSubject(data: any, event: any) {
+        let target = event.target || event.srcElement;
+        let rootViewModel = ko.contextFor(target).$parents[1];
         let helper = new Helper();
         if (helper.validateMandatoryFormFields("addNewSubjectForm")) {
             let newSubject = new TimetableSubjectContentViewModel();
-            newSubject.name(this.newSubjectName().toString());
-            newSubject.schoolGrade(this.newSubjectSchoolGrade.toString());
-            newSubject.color(this.newSubjectColor.toString());
-            this.subjects.push(newSubject);
+            newSubject.name(data.newSubjectName().toString());
+            newSubject.schoolGrade(data.newSubjectSchoolGrade.toString());
+            newSubject.color(data.newSubjectColor.toString());
+            rootViewModel.subjectAdministrationViewModel.subjects.push(newSubject);
             jQuery("#modal-AddSubject").modal("toggle");
         }
     }
 
+    activateTooltips() {
+        jQuery('[data-toggle="tooltip"]').tooltip();
+    }
 }
 
 export class TimetableViewMode {
@@ -97,11 +93,13 @@ export class TimetableViewMode {
                         newItemContent.id(rowItem.lesson.id);
                         newItemContent.name(rowItem.lesson.name);
                         newItemContent.color("#" + rowItem.lesson.color);
+                        console.log(rowItem.lesson.tbClass.name);
                         newItemContent.schoolGrade(rowItem.lesson.tbClass.name);
                         newRowItem.hasSubject(true);
                     }
                     else {
                         newItemContent.name(rowItem.description);
+                        newRowItem.inlineEditingAllowed(true);
                     }
                     newRowItem.content(newItemContent);
 
@@ -109,7 +107,6 @@ export class TimetableViewMode {
                 }
                 this.timetable.push(newRow);
             }
-            console.log(this.timetable());
         }
         catch (Error) {
             console.log("Error while reading data from timetable model! Message: " + Error.message);
@@ -159,9 +156,37 @@ export class TimetableViewMode {
     }
 }
 
+export class AddNewSubjectModalDialogViewModel {
+
+    constructor(texts: CultureSpecificTexts) {
+        this.lblModalDialogTitle(texts.texts.filter(item => item.id == "AddSubjectModalDialogHeader")[0].text);
+        this.lblAddSubjectNameLabel(texts.texts.filter(item => item.id == "AddSubjectNameLabel")[0].text);
+        this.lblAddSubjectClassLabel(texts.texts.filter(item => item.id == "AddSubjectClassLabel")[0].text);
+        this.lblAddSubjectColorLabel(texts.texts.filter(item => item.id == "AddSubjectColorLabel")[0].text);
+        this.lblAddNewSubjectButtonLabel(texts.texts.filter(item => item.id == "AddNewSubjectButtonLabel")[0].text);
+    }
+
+    lblModalDialogTitle = ko.observable<string>();
+    lblAddSubjectNameLabel = ko.observable<string>();
+    lblAddSubjectClassLabel = ko.observable<string>();
+    lblAddSubjectColorLabel = ko.observable<string>();
+    lblAddNewSubjectButtonLabel = ko.observable<string>();
+
+    newSubjectName = ko.observable<string>();
+    newSubjectSchoolGrade = ko.observable<string>();
+    newSubjectColor = ko.observable<string>("#00AABB");
+}
+
 export class SectionTimetableViewModel {
-    
-    public subjectAdministrationViewModel = new SubjectAdministrationViewModel();
+
+    constructor(texts: CultureSpecificTexts) {
+        console.log(texts);
+        this.subjectAdministrationViewModel = new SubjectAdministrationViewModel(texts);
+    }
+
+    private _texts = new CultureSpecificTexts();
+
+    public subjectAdministrationViewModel: SubjectAdministrationViewModel = null;
     public timetableViewModel = new TimetableViewMode();
     
     public dragItem = ko.observable<TimetableSubjectContentViewModel>();
@@ -200,7 +225,6 @@ export class SectionTimetableViewModel {
                 }
             }
             value.inlineEditingVisible(true);
-            debugger;
             value.labelVisible(false);
             if (rootViewModel.lastElementEdited() != undefined && rootViewModel.lastElementEdited() !== value) {
                 rootViewModel.lastElementEdited().inlineEditingVisible(false);
@@ -231,6 +255,15 @@ export class SectionTimetableViewModel {
         rootViewModel.lastElementEdited().content().name(rootViewModel.lastValueBeforeChanged);
         value.inlineEditingVisible(false);
         value.labelVisible(true);
+    }
+
+    openAddNewSubjectDialog(data: any, event: any) {
+        let target = event.target || event.srcElement;
+        let rootViewModel = ko.contextFor(target).$parent;
+        jQuery("#modal-AddSubject").modal("show");
+        data.addNewSubjectDialogViewModel.newSubjectName("");
+        data.addNewSubjectDialogViewModel.newSubjectSchoolGrade("");
+        data.addNewSubjectDialogViewModel.newSubjectColor("#00AABB");
     }
 
 }

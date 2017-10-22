@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var timetable_1 = require("./model/timetable");
 var lesson_1 = require("./model/lesson");
+var tbClass_1 = require("./model/tbClass");
 var helper_1 = require("./helper");
 var DataInterface;
 (function (DataInterface) {
@@ -87,7 +88,7 @@ var DataInterface;
     DataInterface.getAllSubjects = getAllSubjects;
     function mapTimetableToModel(timetableFromApi) {
         return __awaiter(this, void 0, void 0, function () {
-            var timetable, _i, _a, row, newRow, newRowItems, _b, _c, rowItem, newRowItem, newLesson;
+            var timetable, _i, _a, row, newRow, newRowItems, _b, _c, rowItem, newRowItem, newLesson, newClass;
             return __generator(this, function (_d) {
                 try {
                     timetable = new timetable_1.Timetable();
@@ -110,7 +111,9 @@ var DataInterface;
                                 newLesson.id = rowItem.lesson.id;
                                 newLesson.name = rowItem.lesson.name;
                                 newLesson.color = rowItem.lesson.color;
-                                newLesson.tbClass = rowItem.lesson.blClass.name;
+                                newClass = new tbClass_1.TbClass();
+                                newClass.name = rowItem.lesson.blClass.name;
+                                newLesson.tbClass = newClass;
                                 newRowItem.lesson = newLesson;
                             }
                             else {
@@ -141,7 +144,7 @@ var DataInterface;
                     newSubject.id = item.id;
                     newSubject.name = item.name;
                     newSubject.color = item.color;
-                    newSubject.tbClass = null;
+                    newSubject.tbClass = item.blClass;
                     returnValue.push(newSubject);
                 }
                 return [2 /*return*/, returnValue];

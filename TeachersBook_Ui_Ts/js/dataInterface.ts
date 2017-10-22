@@ -60,7 +60,9 @@ export module DataInterface {
                         newLesson.id = rowItem.lesson.id;
                         newLesson.name = rowItem.lesson.name;
                         newLesson.color = rowItem.lesson.color;
-                        newLesson.tbClass = rowItem.lesson.blClass.name;
+                        let newClass = new TbClass();
+                        newClass.name = rowItem.lesson.blClass.name;
+                        newLesson.tbClass = newClass;
                         newRowItem.lesson = newLesson;
                     }
                     else {
@@ -87,7 +89,7 @@ export module DataInterface {
             newSubject.id = item.id;
             newSubject.name = item.name;
             newSubject.color = item.color;
-            newSubject.tbClass = null;
+            newSubject.tbClass = item.blClass;
             returnValue.push(newSubject);
         }
 

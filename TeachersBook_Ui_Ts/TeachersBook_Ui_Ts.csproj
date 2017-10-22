@@ -3656,6 +3656,7 @@
     <TypeScriptCompile Include="js\enums\sharePointFieldType.ts" />
     <TypeScriptCompile Include="js\helper.ts" />
     <TypeScriptCompile Include="js\init.ts" />
+    <TypeScriptCompile Include="js\model\cultureSpecificTexts.ts" />
     <TypeScriptCompile Include="js\model\lesson.ts" />
     <TypeScriptCompile Include="js\model\tbClass.ts" />
     <TypeScriptCompile Include="js\model\timetable.ts" />

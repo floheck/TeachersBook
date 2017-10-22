@@ -140,6 +140,9 @@ namespace TeachersBook_WebApi.Controllers
                     subjectToAdd.id = subject.id.ToString();
                     subjectToAdd.name = subject.description;
                     subjectToAdd.color = subject.color;
+                    var subjectClass = new BLClass();
+                    subjectClass.name = subject.Classes.name;
+                    subjectToAdd.blClass = subjectClass;
 
                     returnObj.Add(subjectToAdd);
                 }

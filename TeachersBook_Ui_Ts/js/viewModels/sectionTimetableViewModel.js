@@ -35,17 +35,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var cultureSpecificTexts_1 = require("../model/cultureSpecificTexts");
 var dataInterface_1 = require("../dataInterface");
 var timetableRowViewModel_1 = require("./timetableRowViewModel");
 var timetableSubjectViewModel_1 = require("./timetableSubjectViewModel");
 var timetableSubjectContentViewModel_1 = require("./timetableSubjectContentViewModel");
 var helper_1 = require("../helper");
 var SubjectAdministrationViewModel = (function () {
-    function SubjectAdministrationViewModel() {
+    function SubjectAdministrationViewModel(texts) {
+        this._texts = new cultureSpecificTexts_1.CultureSpecificTexts();
+        this.addNewSubjectDialogViewModel = null;
         this.subjects = ko.observableArray();
-        this.newSubjectName = ko.observable();
-        this.newSubjectSchoolGrade = ko.observable();
-        this.newSubjectColor = ko.observable("#00AABB");
+        this.addNewSubjectDialogViewModel = new AddNewSubjectModalDialogViewModel(texts);
         this.fromModel();
     }
     SubjectAdministrationViewModel.prototype.fromModel = function () {
@@ -64,7 +65,7 @@ var SubjectAdministrationViewModel = (function () {
                             subject.id(row.id);
                             subject.name(row.name);
                             subject.color("#" + row.color);
-                            subject.schoolGrade(null);
+                            subject.schoolGrade(row.tbClass.name);
                             this.subjects.push(subject);
                         }
                         return [3 /*break*/, 3];
@@ -77,25 +78,21 @@ var SubjectAdministrationViewModel = (function () {
             });
         });
     };
-    SubjectAdministrationViewModel.prototype.activateTooltips = function () {
-        jQuery('[data-toggle="tooltip"]').tooltip();
-    };
-    SubjectAdministrationViewModel.prototype.openAddNewSubjectDialog = function () {
-        jQuery("#modal-AddSubject").modal("show");
-        this.newSubjectName("");
-        this.newSubjectSchoolGrade("");
-        this.newSubjectColor("#00AABB");
-    };
-    SubjectAdministrationViewModel.prototype.addNewSubject = function () {
+    SubjectAdministrationViewModel.prototype.addNewSubject = function (data, event) {
+        var target = event.target || event.srcElement;
+        var rootViewModel = ko.contextFor(target).$parents[1];
         var helper = new helper_1.Helper();
         if (helper.validateMandatoryFormFields("addNewSubjectForm")) {
             var newSubject = new timetableSubjectContentViewModel_1.TimetableSubjectContentViewModel();
-            newSubject.name(this.newSubjectName().toString());
-            newSubject.schoolGrade(this.newSubjectSchoolGrade.toString());
-            newSubject.color(this.newSubjectColor.toString());
-            this.subjects.push(newSubject);
+            newSubject.name(data.newSubjectName().toString());
+            newSubject.schoolGrade(data.newSubjectSchoolGrade.toString());
+            newSubject.color(data.newSubjectColor.toString());
+            rootViewModel.subjectAdministrationViewModel.subjects.push(newSubject);
             jQuery("#modal-AddSubject").modal("toggle");
         }
+    };
+    SubjectAdministrationViewModel.prototype.activateTooltips = function () {
+        jQuery('[data-toggle="tooltip"]').tooltip();
     };
     return SubjectAdministrationViewModel;
 }());
@@ -137,18 +134,19 @@ var TimetableViewMode = (function () {
                                     newItemContent.id(rowItem.lesson.id);
                                     newItemContent.name(rowItem.lesson.name);
                                     newItemContent.color("#" + rowItem.lesson.color);
+                                    console.log(rowItem.lesson.tbClass.name);
                                     newItemContent.schoolGrade(rowItem.lesson.tbClass.name);
                                     newRowItem.hasSubject(true);
                                 }
                                 else {
                                     newItemContent.name(rowItem.description);
+                                    newRowItem.inlineEditingAllowed(true);
                                 }
                                 newRowItem.content(newItemContent);
                                 newRow.subjects.push(newRowItem);
                             }
                             this.timetable.push(newRow);
                         }
-                        console.log(this.timetable());
                         return [3 /*break*/, 3];
                     case 2:
                         Error_2 = _d.sent();
@@ -201,11 +199,33 @@ var TimetableViewMode = (function () {
     return TimetableViewMode;
 }());
 exports.TimetableViewMode = TimetableViewMode;
+var AddNewSubjectModalDialogViewModel = (function () {
+    function AddNewSubjectModalDialogViewModel(texts) {
+        this.lblModalDialogTitle = ko.observable();
+        this.lblAddSubjectNameLabel = ko.observable();
+        this.lblAddSubjectClassLabel = ko.observable();
+        this.lblAddSubjectColorLabel = ko.observable();
+        this.lblAddNewSubjectButtonLabel = ko.observable();
+        this.newSubjectName = ko.observable();
+        this.newSubjectSchoolGrade = ko.observable();
+        this.newSubjectColor = ko.observable("#00AABB");
+        this.lblModalDialogTitle(texts.texts.filter(function (item) { return item.id == "AddSubjectModalDialogHeader"; })[0].text);
+        this.lblAddSubjectNameLabel(texts.texts.filter(function (item) { return item.id == "AddSubjectNameLabel"; })[0].text);
+        this.lblAddSubjectClassLabel(texts.texts.filter(function (item) { return item.id == "AddSubjectClassLabel"; })[0].text);
+        this.lblAddSubjectColorLabel(texts.texts.filter(function (item) { return item.id == "AddSubjectColorLabel"; })[0].text);
+        this.lblAddNewSubjectButtonLabel(texts.texts.filter(function (item) { return item.id == "AddNewSubjectButtonLabel"; })[0].text);
+    }
+    return AddNewSubjectModalDialogViewModel;
+}());
+exports.AddNewSubjectModalDialogViewModel = AddNewSubjectModalDialogViewModel;
 var SectionTimetableViewModel = (function () {
-    function SectionTimetableViewModel() {
-        this.subjectAdministrationViewModel = new SubjectAdministrationViewModel();
+    function SectionTimetableViewModel(texts) {
+        this._texts = new cultureSpecificTexts_1.CultureSpecificTexts();
+        this.subjectAdministrationViewModel = null;
         this.timetableViewModel = new TimetableViewMode();
         this.dragItem = ko.observable();
+        console.log(texts);
+        this.subjectAdministrationViewModel = new SubjectAdministrationViewModel(texts);
     }
     SectionTimetableViewModel.prototype.deleteSubject = function (data, event, parent) {
         var target = event.target || event.srcElement;
@@ -239,7 +259,6 @@ var SectionTimetableViewModel = (function () {
                 }
             }
             value.inlineEditingVisible(true);
-            debugger;
             value.labelVisible(false);
             if (rootViewModel.lastElementEdited() != undefined && rootViewModel.lastElementEdited() !== value) {
                 rootViewModel.lastElementEdited().inlineEditingVisible(false);
@@ -267,6 +286,14 @@ var SectionTimetableViewModel = (function () {
         rootViewModel.lastElementEdited().content().name(rootViewModel.lastValueBeforeChanged);
         value.inlineEditingVisible(false);
         value.labelVisible(true);
+    };
+    SectionTimetableViewModel.prototype.openAddNewSubjectDialog = function (data, event) {
+        var target = event.target || event.srcElement;
+        var rootViewModel = ko.contextFor(target).$parent;
+        jQuery("#modal-AddSubject").modal("show");
+        data.addNewSubjectDialogViewModel.newSubjectName("");
+        data.addNewSubjectDialogViewModel.newSubjectSchoolGrade("");
+        data.addNewSubjectDialogViewModel.newSubjectColor("#00AABB");
     };
     return SectionTimetableViewModel;
 }());

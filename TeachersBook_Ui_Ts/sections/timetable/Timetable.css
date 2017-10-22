@@ -27,18 +27,6 @@
     cursor:grabbing;
 }
 
-.timetable-no-border {
-    border-style:none;
-}
-
-.timetable-drag-source {
-    opacity: .4;
-}
-
-.timetable-drag-over {
-    border-style: dashed;
-}
-
 .timetable-subject-wrapper {
     float:left;
 }
@@ -67,10 +55,6 @@
     transition-delay: 0.5s;
 }
 
-.timetable-subject-choos-text-wrapper {
-    display:table;
-}
-
 .timetable-subject-choos-text {
     display:table-cell;
     vertical-align:middle;
@@ -96,10 +80,6 @@
     padding-top: 3px;
 }
 
-.has-subject {
-    
-}
-
 .has-subject:hover .timetable-remove-subject {
     opacity:0.85;
 }
@@ -108,13 +88,48 @@
     background-color:wheat;
 }
 
-.timetable-inline-edit-wrapper {
-    margin: 6px 0px 0px 10px;
+.timetable-hour-time-textbox {
+    border: 1px solid black;
+    margin: 5px;
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+    height: 30px;
+    width: 140px;
 }
 
-.timetable-hour-time-textbox {
-    width:90px;
-    text-align:center;
+.timetable-hour-time-text {
+    width: 100%;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+    height: 29px;
+    padding-top: 3px;
+}
+
+.timetable-no-border {
+    border-style:none;
+}
+
+.timetable-drag-source {
+    opacity: .4;
+}
+
+.timetable-drag-over {
+    border-style: dashed;
+}
+
+.timetable-subject-choos-text-wrapper {
+    display:table;
+}
+
+.has-subject {
+    
+}
+
+.timetable-inline-edit-wrapper {
+    margin: 6px 0px 0px 0px;
 }
 
 .timetable-add-row {
