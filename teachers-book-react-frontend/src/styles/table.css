@@ -1,0 +1,54 @@
+.table {
+  width: 100%;
+}
+.table thead {
+  background-color: #34485d;
+  color: white;
+}
+.table tbody {
+  font-weight: 100;
+}
+@media only screen and (min-width: 960px) {
+  table tr:nth-child(even) {
+    background-color: #ced2d6;
+  }
+}
+@media only screen and (min-width: 720px) and (max-width: 959px) {
+  table tr:nth-child(even) {
+    background-color: #ced2d6;
+  }
+}
+@media only screen and (max-width: 719px) {
+  table tr:nth-child(even) {
+    background-color: #ced2d6;
+  }
+}
+@media only screen and (min-width: 960px) {
+  table tr:nth-child(odd) {
+    background-color: transparent;
+  }
+}
+@media only screen and (min-width: 720px) and (max-width: 959px) {
+  table tr:nth-child(odd) {
+    background-color: transparent;
+  }
+}
+@media only screen and (max-width: 719px) {
+  table tr:nth-child(odd) {
+    background-color: transparent;
+  }
+}
+table tbody tr:hover td {
+  background-color: #d35400;
+  color: white;
+}
+@media only screen and (min-width: 960px) {
+  .table-cell-body {
+    padding: 5px;
+  }
+}
+@media only screen and (max-width: 719px) {
+  .table-cell-hide-sm {
+    display: none;
+  }
+}

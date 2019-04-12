@@ -1,0 +1,93 @@
+@desktop:   ~"only screen and (min-width: 960px)";
+@tablet:    ~"only screen and (min-width: 720px) and (max-width: 959px)";
+@smartphone:    ~"only screen and (max-width: 719px)";
+
+.table {
+    width: 100%;
+}
+
+.table thead {
+    background-color: #34485d;
+    color: white;
+
+    @media @desktop {
+
+    }
+
+    @media @tablet {
+
+    }
+
+    @media @smartphone {
+        
+    }
+}
+
+.table tbody {
+    font-weight: 100;
+
+    @media @desktop {
+        
+    }
+
+    @media @tablet {
+
+    }
+
+    @media @smartphone {
+        
+    }
+}
+
+table tr:nth-child(even) {
+    @media @desktop {
+        background-color: #ced2d6;
+    }
+
+    @media @tablet {
+        background-color: #ced2d6;
+    }
+
+    @media @smartphone {
+        background-color: #ced2d6;
+    }
+}
+
+table tr:nth-child(odd) {
+    @media @desktop {
+        background-color: transparent;
+    }
+
+    @media @tablet {
+        background-color: transparent;
+    }
+
+    @media @smartphone {
+        background-color: transparent;
+    }
+}
+
+table tbody tr:hover td {
+    background-color: #d35400;
+    color: white;
+}
+
+.table-cell-body {
+    @media @desktop {
+        padding: 5px;
+    }
+
+    @media @tablet {
+
+    }
+
+    @media @smartphone {
+        
+    }
+}
+
+.table-cell-hide-sm {
+    @media @smartphone {
+        display: none;
+    }
+}

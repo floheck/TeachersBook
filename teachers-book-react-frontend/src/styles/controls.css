@@ -1,0 +1,23 @@
+.btn {
+  color: #34495e;
+}
+.btn:hover {
+  background-color: #d35400;
+  color: white;
+}
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+select {
+  border: solid 1px #34495e !important;
+  border-radius: 5px !important;
+  background-color: transparent !important;
+}
+select:focus {
+  box-shadow: none !important;
+}
+option {
+  background-color: transparent !important;
+  border: none !important;
+}

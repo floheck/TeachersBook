@@ -1,0 +1,179 @@
+@desktop:   ~"only screen and (min-width: 960px)";
+@tablet:    ~"only screen and (min-width: 720px) and (max-width: 959px)";
+@smartphone:    ~"only screen and (max-width: 719px)";
+
+.menu-container {
+    @media @desktop {
+        width: 265px;
+        float: left;
+    }
+
+    @media @tablet {
+
+    }
+
+    @media @smartphone {
+
+    }
+}
+
+.menu-container-shrinked {
+    @media @desktop {
+        width: 111px;
+        float: left;
+    }
+
+    @media @tablet {
+
+    }
+
+    @media @smartphone {
+        width: 35px;
+        float: right;
+    }
+}
+
+.menu-bar {
+    background-color: #34495e;
+    height: calc(~'100vh - 90px');
+}
+
+.menu-link {
+    @media @desktop {
+        height: 40px;
+        margin: 5px 15px;
+        border-radius: 4px;
+        color: white;
+        padding: .5rem 1rem;
+        display: block;
+        text-decoration: none;
+    }
+
+    @media @tablet {
+
+    }
+
+    @media @smartphone {
+        height: 40px;
+        margin: 5px 15px;
+        border-radius: 4px;
+        color: white;
+        padding: .5rem 1rem;
+        display: block;
+        text-decoration: none;
+    }
+}
+
+.menu-link-shrinked {
+    @media @desktop {
+        height: 40px;
+        margin: 5px 0px;
+        border-radius: 4px;
+        color: white;
+    }
+
+    @media @tablet {
+
+    }
+
+    @media @smartphone {
+        
+    }
+}
+
+.menu-link:hover {
+    background-color: #d35400;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-bar-icon {
+    float: left;
+    margin-right: 10px;
+}
+
+.menu-bar-icon-shrinked {
+    float: left;
+    margin-right: 0px;
+}
+
+.menu-text-visible {
+    display: block;
+}
+
+.menu-text-hidden {
+    display: none;
+}
+
+.menu {
+    @media @desktop {
+        padding-top: 0px;
+    }
+
+    @media @tablet {
+
+    }
+
+    @media @smartphone {
+        
+    }
+}
+
+.menu-expand {
+    @media @desktop {
+        width: 230px;
+        margin: 20px 0px 15px 15px;
+        border-radius: 5px;
+    }
+
+    @media @tablet {
+
+    }
+
+    @media @smartphone {
+        width: 100%;
+        float: left;
+        position: absolute;
+        margin-top: 35px;
+        z-index: 1000;
+    }
+}
+
+.menu-shrinked {
+    @media @desktop {
+        width: 80px;
+        margin: 20px 0px 15px 15px;
+        border-radius: 5px;
+    }
+
+    @media @tablet {
+
+    }
+
+    @media @smartphone {
+        display: none;
+    }
+}
+
+.menu-expander {
+    color: #34485d;
+
+    @media @desktop {
+        margin-left: 15px;
+        padding: 25px 0px 0px 25px;
+    }
+
+    @media @tablet {
+        
+    }
+
+    @media @smartphone {
+        padding: 0px;
+        float: right;
+        margin-right: 15px;
+    }
+}
+
+.menu-logo {
+    padding: 25px;
+}

@@ -1,0 +1,14 @@
+.tab-content {
+  margin: 15px 0px 0px 0px;
+}
+.nav-pills-left-space {
+  float: left;
+  width: calc(100% - 35px);
+}
+.nav-pills-action-button {
+  float: right;
+  cursor: pointer;
+}
+.nav-pills-action-button :hover {
+  color: #d35400;
+}

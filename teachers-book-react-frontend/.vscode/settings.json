@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/f923d584-a520-4071-9ce6-2b2f5bbb6b89/resourceGroups/TeachersBook/providers/Microsoft.Web/sites/TeachersBookFrontEnd",
+    "appService.deploySubpath": ""
+}
