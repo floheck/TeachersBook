@@ -26,7 +26,6 @@ namespace TeachersBook_WebApi
         }
     
         public virtual DbSet<Breaks> Breaks { get; set; }
-        public virtual DbSet<Classes> Classes { get; set; }
         public virtual DbSet<Lists> Lists { get; set; }
         public virtual DbSet<Pupils> Pupils { get; set; }
         public virtual DbSet<Ratings> Ratings { get; set; }
@@ -37,5 +36,7 @@ namespace TeachersBook_WebApi
         public virtual DbSet<TimeTables> TimeTables { get; set; }
         public virtual DbSet<UserData> UserData { get; set; }
         public virtual DbSet<SubjectToTimeTableHours> SubjectToTimeTableHours { get; set; }
+        public virtual DbSet<Classes> Classes { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

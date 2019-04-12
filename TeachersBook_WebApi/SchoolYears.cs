@@ -19,16 +19,20 @@ namespace TeachersBook_WebApi
         {
             this.Subjects = new HashSet<Subjects>();
             this.TimeTables = new HashSet<TimeTables>();
+            this.Classes = new HashSet<Classes>();
         }
     
         public System.Guid id { get; set; }
         public string schoolYear { get; set; }
         public System.Guid teacher { get; set; }
+        public Nullable<bool> selected { get; set; }
     
         public virtual UserData UserData { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subjects> Subjects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TimeTables> TimeTables { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Classes> Classes { get; set; }
     }
 }

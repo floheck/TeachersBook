@@ -17,7 +17,6 @@ namespace TeachersBook_WebApi
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserData()
         {
-            this.Classes = new HashSet<Classes>();
             this.SchoolYears = new HashSet<SchoolYears>();
         }
     
@@ -30,8 +29,6 @@ namespace TeachersBook_WebApi
         public bool isActive { get; set; }
         public string role { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Classes> Classes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SchoolYears> SchoolYears { get; set; }
     }

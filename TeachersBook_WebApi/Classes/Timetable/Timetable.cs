@@ -5,10 +5,10 @@ using System.Web;
 
 namespace TeachersBook_WebApi.InternalClasses.Timetable
 {
-    public class BLTimetable
+    public class Timetable
     {
-        List<BLSubjectsRow> _rows;
-        public List<BLSubjectsRow> rows
+        List<TtSubjectsRow> _rows;
+        public List<TtSubjectsRow> rows
         {
             get
             {
@@ -20,19 +20,19 @@ namespace TeachersBook_WebApi.InternalClasses.Timetable
             }
         } 
         
-        public BLTimetable()
+        public Timetable()
         {
-            _rows = new List<BLSubjectsRow>();
+            _rows = new List<TtSubjectsRow>();
         }
     }
 
-    public class BLSubjectsRow
+    public class TtSubjectsRow
     {
-        List<BLSubjectsRowItem> _subjects;
+        List<TtSubjectsRowItem> _subjects;
 
         public string id { get; set; }
         public string rowType { get; set; }
-        public List<BLSubjectsRowItem> subjects
+        public List<TtSubjectsRowItem> subjects
         {
             get
             {
@@ -43,19 +43,22 @@ namespace TeachersBook_WebApi.InternalClasses.Timetable
                 _subjects = value;
             }
         }
+        public bool isNew { get; set; }
+        public string start { get; set; }
+        public string end { get; set; }
 
-        public BLSubjectsRow()
+        public TtSubjectsRow()
         {
-            _subjects = new List<BLSubjectsRowItem>();
+            _subjects = new List<TtSubjectsRowItem>();
         }
     }
 
-    public class BLSubjectsRowItem
+    public class TtSubjectsRowItem
     {
         public string id { get; set; }
         public int hour { get; set; }
         public int day { get; set; }
-        public BLLesson lesson { get; set; }
+        public TtLesson lesson { get; set; }
         public string description { get; set; }
     }
 
@@ -70,16 +73,18 @@ namespace TeachersBook_WebApi.InternalClasses.Timetable
     //    public string description { get; set; }
     //}
 
-    public class BLLesson
+    public class TtLesson
     {
         public string id { get; set; }
         public string name { get; set; }
-        public BLClass blClass { get; set; }
+        public TtClass TtClass { get; set; }
         public string color { get; set; }
+        public bool isNew { get; set; }
     }
 
-    public class BLClass
+    public class TtClass
     {
+        public string id { get; set; }
         public string name { get; set; }
     }
 }

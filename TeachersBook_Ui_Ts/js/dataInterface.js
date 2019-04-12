@@ -39,6 +39,7 @@ var timetable_1 = require("./model/timetable");
 var lesson_1 = require("./model/lesson");
 var tbClass_1 = require("./model/tbClass");
 var helper_1 = require("./helper");
+var webApiResponse_1 = require("./model/webApiResponse");
 var DataInterface;
 (function (DataInterface) {
     function getCompleteTimetable(schoolYear) {
@@ -63,16 +64,15 @@ var DataInterface;
         });
     }
     DataInterface.getCompleteTimetable = getCompleteTimetable;
-    function getAllSubjects(test) {
+    function getAllSubjects(schoolYear) {
         return __awaiter(this, void 0, void 0, function () {
             var helper, allSubjectsResult, allSubjects;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log(test);
                         helper = new helper_1.Helper();
                         return [4 /*yield*/, jQuery.ajax({
-                                url: "http://teachersbookwebapi.azurewebsites.net/api/Timetable/getAllSubjects?schoolYear=" + encodeURI(test),
+                                url: "http://teachersbookwebapi.azurewebsites.net/api/Timetable/getAllSubjects?schoolYear=" + encodeURI(schoolYear),
                                 type: "GET",
                                 headers: { "Authorization": "bearer " + helper.getUrlParameter("accesstoken") },
                                 cache: false
@@ -86,6 +86,88 @@ var DataInterface;
         });
     }
     DataInterface.getAllSubjects = getAllSubjects;
+    function getAllClasses(schoolYear) {
+        return __awaiter(this, void 0, void 0, function () {
+            var helper, allSchoolClassesResult, allSubjects;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        helper = new helper_1.Helper();
+                        return [4 /*yield*/, jQuery.ajax({
+                                url: "http://teachersbookwebapi.azurewebsites.net/api/Timetable/getAllClasses?schoolYear=" + encodeURI(schoolYear),
+                                type: "GET",
+                                headers: { "Authorization": "bearer " + helper.getUrlParameter("accesstoken") },
+                                cache: false
+                            })];
+                    case 1:
+                        allSchoolClassesResult = _a.sent();
+                        allSubjects = mapSchoolClassesToModel(allSchoolClassesResult);
+                        return [2 /*return*/, allSubjects];
+                }
+            });
+        });
+    }
+    DataInterface.getAllClasses = getAllClasses;
+    function addSubject(schoolYear, newSubject) {
+        return __awaiter(this, void 0, void 0, function () {
+            var helper, returnValue, addSubjectsResult;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        helper = new helper_1.Helper();
+                        returnValue = new webApiResponse_1.WebApiAddItemResponse();
+                        return [4 /*yield*/, jQuery.ajax({
+                                url: "http://teachersbookwebapi.azurewebsites.net/api/Timetable/addSubject?schoolYear=" + encodeURI(schoolYear),
+                                type: "POST",
+                                headers: { "Authorization": "bearer " + helper.getUrlParameter("accesstoken") },
+                                dataType: "json",
+                                data: newSubject
+                            })];
+                    case 1:
+                        addSubjectsResult = _a.sent();
+                        console.log(addSubjectsResult);
+                        returnValue.status = addSubjectsResult.substring(0, addSubjectsResult.indexOf("!"));
+                        returnValue.newId = addSubjectsResult.substring(addSubjectsResult.indexOf(":") + 1).trim();
+                        console.log(returnValue);
+                        return [2 /*return*/, returnValue];
+                }
+            });
+        });
+    }
+    DataInterface.addSubject = addSubject;
+    function updateTimetable(schoolYear, timetable) {
+        return __awaiter(this, void 0, void 0, function () {
+            var helper, returnValue;
+            return __generator(this, function (_a) {
+                helper = new helper_1.Helper();
+                returnValue = new webApiResponse_1.WebApiAddItemResponse();
+                return [2 /*return*/, returnValue];
+            });
+        });
+    }
+    DataInterface.updateTimetable = updateTimetable;
+    function deleteSubject(schoolYear, subjectToDeleteId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var helper, success, addSubjectsResult;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        helper = new helper_1.Helper();
+                        success = false;
+                        return [4 /*yield*/, jQuery.ajax({
+                                url: "http://teachersbookwebapi.azurewebsites.net/api/Timetable/removeSubject?schoolYear=" + encodeURI(schoolYear) + "&subjectToRemoveId=" + subjectToDeleteId,
+                                type: "DELETE",
+                                headers: { "Authorization": "bearer " + helper.getUrlParameter("accesstoken") },
+                            })];
+                    case 1:
+                        addSubjectsResult = _a.sent();
+                        console.log(addSubjectsResult);
+                        return [2 /*return*/, success];
+                }
+            });
+        });
+    }
+    DataInterface.deleteSubject = deleteSubject;
     function mapTimetableToModel(timetableFromApi) {
         return __awaiter(this, void 0, void 0, function () {
             var timetable, _i, _a, row, newRow, newRowItems, _b, _c, rowItem, newRowItem, newLesson, newClass;
@@ -95,25 +177,28 @@ var DataInterface;
                     console.log(timetableFromApi);
                     for (_i = 0, _a = timetableFromApi.rows; _i < _a.length; _i++) {
                         row = _a[_i];
-                        newRow = new timetable_1.SubjectRow();
+                        newRow = new timetable_1.TtSubjectRow();
                         newRow.id = row.id;
+                        newRow.start = row.start;
+                        newRow.end = row.end;
                         newRow.rowType = row.rowType;
                         newRowItems = new Array();
                         for (_b = 0, _c = row.subjects; _b < _c.length; _b++) {
                             rowItem = _c[_b];
-                            newRowItem = new timetable_1.SubjectRowItem();
+                            newRowItem = new timetable_1.TtSubjectRowItem();
                             newRowItem.id = rowItem.id;
                             newRowItem.hour = rowItem.hour;
                             newRowItem.day = rowItem.day;
                             newRowItem.description = rowItem.description;
                             if (rowItem.lesson != null) {
-                                newLesson = new lesson_1.Lesson();
+                                newLesson = new lesson_1.TtLesson();
                                 newLesson.id = rowItem.lesson.id;
                                 newLesson.name = rowItem.lesson.name;
                                 newLesson.color = rowItem.lesson.color;
-                                newClass = new tbClass_1.TbClass();
-                                newClass.name = rowItem.lesson.blClass.name;
-                                newLesson.tbClass = newClass;
+                                newClass = new tbClass_1.TtClass();
+                                newClass.id = rowItem.lesson.TtClass.id;
+                                newClass.name = rowItem.lesson.TtClass.name;
+                                newLesson.TtClass = newClass;
                                 newRowItem.lesson = newLesson;
                             }
                             else {
@@ -140,12 +225,28 @@ var DataInterface;
                 returnValue = new Array();
                 for (_i = 0, subjectsFromApi_1 = subjectsFromApi; _i < subjectsFromApi_1.length; _i++) {
                     item = subjectsFromApi_1[_i];
-                    newSubject = new lesson_1.Lesson();
+                    newSubject = new lesson_1.TtLesson();
                     newSubject.id = item.id;
                     newSubject.name = item.name;
                     newSubject.color = item.color;
-                    newSubject.tbClass = item.blClass;
+                    newSubject.TtClass = item.TtClass;
                     returnValue.push(newSubject);
+                }
+                return [2 /*return*/, returnValue];
+            });
+        });
+    }
+    function mapSchoolClassesToModel(classesFromApi) {
+        return __awaiter(this, void 0, void 0, function () {
+            var returnValue, _i, classesFromApi_1, item, newClasse;
+            return __generator(this, function (_a) {
+                returnValue = new Array();
+                for (_i = 0, classesFromApi_1 = classesFromApi; _i < classesFromApi_1.length; _i++) {
+                    item = classesFromApi_1[_i];
+                    newClasse = new tbClass_1.TtClass();
+                    newClasse.id = item.id;
+                    newClasse.name = item.name;
+                    returnValue.push(newClasse);
                 }
                 return [2 /*return*/, returnValue];
             });

@@ -1,20 +1,23 @@
-﻿import { Lesson } from "./lesson";
-import { TbClass } from "./tbClass";        
+﻿import { TtLesson } from "./lesson";
+import { TtClass } from "./tbClass";        
 
 export class Timetable {
-    rows = new Array<SubjectRow>();
+    rows = new Array<TtSubjectRow>();
 }
 
-export class SubjectRow {
+export class TtSubjectRow {
     id?: string = null;
+    start?: string = null;
+    end?: string = null;
     rowType?: string = null;
-    subjects = new Array<SubjectRowItem>();
+    subjects = new Array<TtSubjectRowItem>();
+    isNew: boolean = false;
 }
 
-export class SubjectRowItem {
+export class TtSubjectRowItem {
     id?: string = null;
     hour?: number = null;
     day?: number = null;
-    lesson?: Lesson = null;
+    lesson?: TtLesson = null;
     description?: string = null;
 }

@@ -1,13 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Lesson = (function () {
-    function Lesson() {
+var TtLesson = (function () {
+    function TtLesson() {
         this.id = null;
         this.name = null;
-        this.tbClass = null;
+        this.TtClass = null;
         this.color = null;
+        this.isNew = false;
     }
-    return Lesson;
+    return TtLesson;
 }());
-exports.Lesson = Lesson;
+exports.TtLesson = TtLesson;
 //# sourceMappingURL=lesson.js.map

@@ -215,8 +215,10 @@
     <Compile Include="Classes.cs">
       <DependentUpon>TeachersBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Settings\SchoolYears.cs" />
     <Compile Include="Classes\Timetable\Timetable.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -240,6 +242,9 @@
       <DependentUpon>TeachersBookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SubjectToTimeTableHours.cs">
+      <DependentUpon>TeachersBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
       <DependentUpon>TeachersBookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TeachersBookModel.Context.cs">

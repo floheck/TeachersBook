@@ -4,7 +4,7 @@
         <div>
             <ul class="nav navbar-right panel_toolbox">
                 <li>
-                    <a id="editTimetable" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <a id="editTimetable" class="dropdown-toggle" role="button" aria-expanded="false" data-bind="click: $root.toggleEditMode"><i class="fa fa-wrench"></i></a>
                 </li>
             </ul>
         </div>
@@ -26,14 +26,14 @@
                     <tr data-bind="template: {name: 'subjectTimetableTempl', foreach: row.subjects}"></tr>
                     <!-- /ko -->
                     <!-- ko if: row.rowType() === 'break'-->
-                    <tr style="background-color:wheat;" data-bind="template: {name: 'subjectTimetableTempl', foreach: row.subjects}"></tr>
+                    <tr class="timetable-break-row" data-bind="template: {name: 'subjectTimetableTempl', foreach: row.subjects}"></tr>
                     <!-- /ko -->
                 </tbody>
             </table>
             <!-- /ko -->
         </div>
         <!-- ko with: subjectAdministrationViewModel -->
-        <div id="editTimetableWrapper" style="width:100%;">
+        <div id="editTimetableWrapper" style="width:100%;" data-bind="visible: $root.isInEditMode">
             <div id="subjectsRow" class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="timetable-subject-wrapper" data-bind="template: { name: 'subjectTempl', foreach: subjects, afterRender: activateTooltips}">
@@ -67,7 +67,10 @@
                                     <span id="lst_AddSubjectClassLabel" data-bind="text: lblAddSubjectClassLabel"></span><span class="required">*</span>
                                 </label>
                                 <div class="col-md-7 col-sm-7 col-xs-12">
-                                    <input type="text" id="last-name" data-bind="value: newSubjectSchoolGrade" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
+                                    <select class="form-control" data-bind="options: schoolClassesSection,
+                                                                            optionsText: 'name',
+                                                                            value: newSubjectSchoolClass,
+                                                                            optionCaption: 'Auswählen...'"></select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -132,9 +135,9 @@
                 ">
                 <div class="timetable-subject-text-wrapper" data-bind="css: (hasSubject() === false ? '' : 'has-subject')">
                     <div class="timetable-subject-text">
-                        <div class="timetable-subject-name" data-bind='html: content().name'></div> <div class="timetable-subject-class" data-bind="html: content().schoolGrade"></div>
+                        <div class="timetable-subject-name" data-bind='html: content().name'></div> <div class="timetable-subject-class" data-bind="html: content().tTClass().name"></div>
                     </div>
-                    <div class="timetable-remove-subject" data-bind="click: $root.deleteSubject">
+                    <div class="timetable-remove-subject" data-bind="click: $root.deleteSubject, visible: $root.isInEditMode">
                         <span>
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </span>
@@ -166,8 +169,12 @@
             <!-- /ko -->
         </div>
         <!-- ko if: day() === 0 -->
-        <div class="timetable-add-row">
-            <i class="fa fa-plus-square" aria-hidden="true" data-bind="click: $parents[1].addNewSubjectRow"></i>
+        <div class="timetable-add-row" data-bind="visible: $root.isInEditMode">
+            <i style="float:left; margin-right:10px;" class="fa fa-plus-square" aria-hidden="true"></i>
+            <div style="float:left">
+                <button type="button" class="btn btn-xs" data-bind="click: $parents[1].addNewSubjectRow"><span id="lst_AddNewSubjectRowButtonLabel" data-bind="text: $parents[1].addNewSubjectRowButtonLabel"></span></button>
+                <button type="button" class="btn btn-xs" data-bind="click: $parents[1].addNewPauseRow"><span id="lst_AddNewPauseRowButtonLabel" data-bind="text: $parents[1].addNewPauseRowButtonLabel"></span></button>
+            </div>
         </div>
         <!-- /ko -->
     </td>
@@ -179,7 +186,7 @@
             <li class="timetable-subject timetable-no-border" data-bind="click: $root.clickSubjectLabel, visible: labelVisible">
                 <div class="timetable-subject-text-wrapper" data-bind="css: (hasSubject() === false ? '' : 'has-subject')">
                     <div class="timetable-subject-text">
-                        <div class="timetable-subject-name" data-bind='html: content().name'></div> <div class="timetable-subject-class" data-bind="html: content().schoolGrade"></div>
+                        <div class="timetable-subject-name" data-bind='html: content().name'></div>
                     </div>
                 </div>
             </li>
@@ -193,7 +200,7 @@
             <li class="timetable-hour-time-textbox timetable-no-border" data-bind="click: $root.clickSubjectLabel, visible: labelVisible">
                 <div class="timetable-subject-text-wrapper" data-bind="css: (hasSubject() === false ? '' : 'has-subject')">
                     <div class="timetable-subject-text">
-                        <div class="timetable-hour-time-text" data-bind='html: content().name'></div> <div class="timetable-subject-class" data-bind="html: content().schoolGrade"></div>
+                        <div class="timetable-hour-time-text" data-bind='html: content().name'></div>
                     </div>
                 </div>
             </li>
@@ -205,8 +212,12 @@
             <!-- /ko -->
         </div>
         <!-- ko if: day() === 0 -->
-        <div class="timetable-add-row">
-            <i class="fa fa-plus-square" aria-hidden="true"></i>
+        <div class="timetable-add-row" data-bind="visible: $root.isInEditMode">
+            <i style="float:left; margin-right:10px;" class="fa fa-plus-square" aria-hidden="true"></i>
+            <div style="float:left">
+                <button type="button" class="btn btn-xs" data-bind="click: $parents[1].addNewSubjectRow"><span id="lst_AddNewSubjectRowButtonLabel" data-bind="text: $parents[1].addNewSubjectRowButtonLabel"></span></button>
+                <button type="button" class="btn btn-xs" data-bind="click: $parents[1].addNewPauseRow"><span id="lst_AddNewPauseRowButtonLabel" data-bind="text: $parents[1].addNewPauseRowButtonLabel"></span></button>
+            </div>
         </div>
         <!-- /ko -->
     </td>
@@ -214,7 +225,7 @@
 </script>
 
 <script id="subjectTempl" type="text/html">
-    <li class="draggable timetable-subject red-tooltip timetable-subject-dragable" data-toggle="tooltip" title="In den Stundenplan ziehen um zu übernehmen" data-placement="top" draggable="true" data-bind="event:{
+    <li class="draggable timetable-subject red-tooltip timetable-subject-dragable" data-placement="top" draggable="true" data-bind="event:{
 	      dragstart:   function(data, event){
 	                    jQuery(event.target).addClass('timetable-drag-source');
 	                    $root.dragItem(data);
@@ -241,9 +252,14 @@
         style:{
             'background-color' :  color
         }">
-        <div class="timetable-subject-text-wrapper timetable-subject-choos-text-wrapper">
-            <div class="timetable-subject-text timetable-subject-choos-text">
-                <div class="timetable-subject-name" data-bind='html: name'></div> <div class="timetable-subject-class" data-bind="html: schoolGrade"></div>
+        <div class="timetable-subject-text-wrapper has-subject">
+            <div class="timetable-subject-text">
+                <div class="timetable-subject-name" data-bind='html: name'></div> <div class="timetable-subject-class" data-bind="html: tTClass().name"></div>
+            </div>
+            <div class="timetable-remove-subject" data-bind="click: $parent.deleteSubject">
+                <span>
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </span>
             </div>
         </div>
 

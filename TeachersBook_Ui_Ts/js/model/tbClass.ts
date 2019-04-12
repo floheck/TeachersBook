@@ -1,3 +1,4 @@
-﻿export class TbClass {
+﻿export class TtClass {
+    id?: string = null;
     name?: string = null;
 }

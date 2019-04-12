@@ -12,7 +12,7 @@ namespace TeachersBook_WebApi
         {
             // Web-API-Konfiguration und -Dienste
             // Enable CORS
-            //config.EnableCors();
+            config.EnableCors();
 
 
             // Web-API-Routen

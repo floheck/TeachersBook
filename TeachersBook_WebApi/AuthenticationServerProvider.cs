@@ -5,9 +5,11 @@ using System.Linq;
 using System.Web;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System.Web.Http.Cors;
 
 namespace TeachersBook_WebApi
 {
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class AuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
@@ -48,7 +50,8 @@ namespace TeachersBook_WebApi
                         }
                         identity.AddClaim(new Claim("username", user.username));
                         identity.AddClaim(new Claim(ClaimTypes.Name, string.Format("{0} {1}", user.firstname, user.lastname)));
-                        identity.AddClaim(new Claim("id", user.id.ToString()))  ;
+                        identity.AddClaim(new Claim("id", user.id.ToString()));
+                        //context.Ticket.Properties.ExpiresUtc = DateTime.Now.AddMonths(1);
                         context.Validated(identity);
                     }
                     else

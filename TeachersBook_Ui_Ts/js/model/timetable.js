@@ -7,24 +7,27 @@ var Timetable = (function () {
     return Timetable;
 }());
 exports.Timetable = Timetable;
-var SubjectRow = (function () {
-    function SubjectRow() {
+var TtSubjectRow = (function () {
+    function TtSubjectRow() {
         this.id = null;
+        this.start = null;
+        this.end = null;
         this.rowType = null;
         this.subjects = new Array();
+        this.isNew = false;
     }
-    return SubjectRow;
+    return TtSubjectRow;
 }());
-exports.SubjectRow = SubjectRow;
-var SubjectRowItem = (function () {
-    function SubjectRowItem() {
+exports.TtSubjectRow = TtSubjectRow;
+var TtSubjectRowItem = (function () {
+    function TtSubjectRowItem() {
         this.id = null;
         this.hour = null;
         this.day = null;
         this.lesson = null;
         this.description = null;
     }
-    return SubjectRowItem;
+    return TtSubjectRowItem;
 }());
-exports.SubjectRowItem = SubjectRowItem;
+exports.TtSubjectRowItem = TtSubjectRowItem;
 //# sourceMappingURL=timetable.js.map

@@ -1,8 +1,9 @@
-﻿import { TbClass } from "./tbClass";
+﻿import { TtClass } from "./tbClass";
 
-export class Lesson {
+export class TtLesson {
     id?: string = null;
     name?: string = null;
-    tbClass?: TbClass = null;
+    TtClass?: TtClass = null;
     color?: string = null;
+    isNew: boolean = false;
 }

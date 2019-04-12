@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var TbClass = (function () {
-    function TbClass() {
+var TtClass = (function () {
+    function TtClass() {
+        this.id = null;
         this.name = null;
     }
-    return TbClass;
+    return TtClass;
 }());
-exports.TbClass = TbClass;
+exports.TtClass = TtClass;
 //# sourceMappingURL=tbClass.js.map

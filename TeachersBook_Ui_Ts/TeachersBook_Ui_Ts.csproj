@@ -82,16 +82,28 @@
     <Content Include="js\enums\sharePointFieldType.js" />
     <Content Include="js\helper.js" />
     <Content Include="js\init.js" />
+    <Content Include="js\model\cultureSpecificTexts.js" />
     <Content Include="js\model\lesson.js" />
     <Content Include="js\model\tbClass.js" />
     <Content Include="js\model\timetable.js" />
+    <Content Include="js\model\webApiResponse.js" />
     <Content Include="js\news.js" />
     <Content Include="js\sectionLoader.js" />
     <Content Include="js\sections.js" />
     <Content Include="js\viewModels\sectionTimetableViewModel.js" />
+    <Content Include="js\viewModels\timetableClassViewModel.js" />
     <Content Include="js\viewModels\timetableRowViewModel.js" />
     <Content Include="js\viewModels\timetableSubjectContentViewModel.js" />
     <Content Include="js\viewModels\timetableSubjectViewModel.js" />
+    <Content Include="libs\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
+    <Content Include="libs\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
+    <Content Include="libs\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha-horizontal.png" />
+    <Content Include="libs\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha.png" />
+    <Content Include="libs\bootstrap-colorpicker\img\bootstrap-colorpicker\hue-horizontal.png" />
+    <Content Include="libs\bootstrap-colorpicker\img\bootstrap-colorpicker\hue.png" />
+    <Content Include="libs\bootstrap-colorpicker\img\bootstrap-colorpicker\saturation.png" />
+    <Content Include="libs\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
+    <Content Include="libs\bootstrap-colorpicker\js\bootstrap-colorpicker.min.js" />
     <Content Include="node_modules\gentelella\build\css\custom.css" />
     <Content Include="node_modules\gentelella\build\css\custom.min.css" />
     <Content Include="node_modules\gentelella\build\js\custom.js" />
@@ -2790,7 +2802,7 @@
     <Content Include="node_modules\sweetalert2\src\utils\params.js" />
     <Content Include="node_modules\sweetalert2\src\utils\utils.js" />
     <Content Include="sections\timetable\Timetable.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>Timetable.less</DependentUpon>
     </Content>
     <Content Include="sections\timetable\Timetable.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -3630,10 +3642,25 @@
     <Content Include="node_modules\sweetalert2\src\colors.scss" />
     <Content Include="node_modules\sweetalert2\src\sweetalert2.scss" />
     <Content Include="js\dataInterface.js.map" />
+    <Content Include="node_modules\%40types\jquery.colorpicker\LICENSE" />
+    <Content Include="node_modules\%40types\jquery.colorpicker\node_modules\%40types\jquery\LICENSE" />
+    <Content Include="node_modules\%40types\jquery.colorpicker\node_modules\%40types\jquery\package.json" />
+    <Content Include="node_modules\%40types\jquery.colorpicker\node_modules\%40types\jquery\README.md" />
+    <Content Include="node_modules\%40types\jquery.colorpicker\package.json" />
+    <Content Include="node_modules\%40types\jquery.colorpicker\README.md" />
+    <Content Include="libs\bootstrap-colorpicker\css\bootstrap-colorpicker.css.map" />
+    <Content Include="libs\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css.map" />
+    <Content Include="js\model\cultureSpecificTexts.js.map" />
+    <Content Include="js\model\webApiResponse.js.map" />
+    <Content Include="js\viewModels\timetableClassViewModel.js.map" />
     <None Include="Properties\PublishProfiles\TeachersBookFrontEnd - Web Deploy.pubxml" />
+    <Content Include="sections\timetable\Timetable.min.css">
+      <DependentUpon>Timetable.css</DependentUpon>
+    </Content>
     <Content Include="system.config.js" />
     <Content Include="tsconfig.json" />
     <Content Include="system.config.js.map" />
+    <Content Include="sections\timetable\Timetable.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3660,12 +3687,16 @@
     <TypeScriptCompile Include="js\model\lesson.ts" />
     <TypeScriptCompile Include="js\model\tbClass.ts" />
     <TypeScriptCompile Include="js\model\timetable.ts" />
+    <TypeScriptCompile Include="js\model\webApiResponse.ts" />
     <TypeScriptCompile Include="js\sectionLoader.ts" />
     <TypeScriptCompile Include="js\sections.ts" />
     <TypeScriptCompile Include="js\viewModels\sectionTimetableViewModel.ts" />
+    <TypeScriptCompile Include="js\viewModels\timetableClassViewModel.ts" />
     <TypeScriptCompile Include="js\viewModels\timetableRowViewModel.ts" />
     <TypeScriptCompile Include="js\viewModels\timetableSubjectContentViewModel.ts" />
     <TypeScriptCompile Include="js\viewModels\timetableSubjectViewModel.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\jquery.colorpicker\index.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\jquery.colorpicker\node_modules\%40types\jquery\index.d.ts" />
     <TypeScriptCompile Include="node_modules\gentelella\vendors\moment\moment.d.ts" />
     <TypeScriptCompile Include="node_modules\moment\moment.d.ts" />
     <TypeScriptCompile Include="node_modules\sweetalert2\sweetalert2.d.ts" />

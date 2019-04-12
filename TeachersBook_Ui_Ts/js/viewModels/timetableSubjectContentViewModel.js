@@ -5,7 +5,9 @@ var TimetableSubjectContentViewModel = (function () {
         this.id = ko.observable();
         this.name = ko.observable();
         this.schoolGrade = ko.observable();
+        this.tTClass = ko.observable();
         this.color = ko.observable();
+        this.isNew = ko.observable(false);
     }
     return TimetableSubjectContentViewModel;
 }());

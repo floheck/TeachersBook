@@ -19,6 +19,14 @@
     {
       "id": "AddNewSubjectButtonLabel",
       "text": "Add subject"
+    },
+    {
+        "id": "AddNewSubjectRowButtonLabel",
+        "text": "Lessons"
+    },
+    {
+        "id": "AddNewPauseRowButtonLabel",
+        "text": "Pause"
     }
   ],
 
@@ -42,6 +50,14 @@
     {
       "id": "AddNewSubjectButtonLabel",
       "text": "Hinzufügen"
+    },
+    {
+        "id": "AddNewSubjectRowButtonLabel",
+        "text": "Schulstunden"
+    },
+    {
+        "id": "AddNewPauseRowButtonLabel",
+        "text": "Pause"
     }
   ]
 }

@@ -18,7 +18,7 @@
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="teacher" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="schoolYearId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Lists">
           <Key>
@@ -59,6 +59,7 @@
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="schoolYear" Type="varchar" MaxLength="9" Nullable="false" />
           <Property Name="teacher" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="selected" Type="bit" />
         </EntityType>
         <EntityType Name="Subjects">
           <Key>
@@ -79,6 +80,16 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.SubjectToTimeTableHours' ist 
           <Property Name="timetableId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="subjectId" Type="uniqueidentifier" />
           <Property Name="breakId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="TimeTableIItems">
           <Key>
@@ -129,15 +140,15 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
           <Property Name="isActive" Type="bit" Nullable="false" />
           <Property Name="role" Type="varchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK_Classes_UserData">
-          <End Role="UserData" Type="Self.UserData" Multiplicity="1" />
+        <Association Name="FK_Classes_SchoolYears">
+          <End Role="SchoolYears" Type="Self.SchoolYears" Multiplicity="1" />
           <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UserData">
+            <Principal Role="SchoolYears">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Classes">
-              <PropertyRef Name="teacher" />
+              <PropertyRef Name="schoolYearId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -317,6 +328,7 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
           <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchoolYears" EntityType="Self.SchoolYears" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeTableIItems" EntityType="Self.TimeTableIItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeTableRows" EntityType="Self.TimeTableRows" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeTables" EntityType="Self.TimeTables" Schema="dbo" store:Type="Tables" />
@@ -334,8 +346,8 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
     [TimeTableRowToTimeTableItems].[hourId] AS [hourId]
     FROM [dbo].[TimeTableRowToTimeTableItems] AS [TimeTableRowToTimeTableItems]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_Classes_UserData" Association="Self.FK_Classes_UserData">
-            <End Role="UserData" EntitySet="UserData" />
+          <AssociationSet Name="FK_Classes_SchoolYears" Association="Self.FK_Classes_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
             <End Role="Classes" EntitySet="Classes" />
           </AssociationSet>
           <AssociationSet Name="FK_Lists_Classes" Association="Self.FK_Lists_Classes">
@@ -401,7 +413,6 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
       <Schema Namespace="TeachersBookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="TeachersBookEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Breaks" EntityType="TeachersBookModel.Breaks" />
-          <EntitySet Name="Classes" EntityType="TeachersBookModel.Classes" />
           <EntitySet Name="Lists" EntityType="TeachersBookModel.Lists" />
           <EntitySet Name="Pupils" EntityType="TeachersBookModel.Pupils" />
           <EntitySet Name="Ratings" EntityType="TeachersBookModel.Ratings" />
@@ -415,22 +426,6 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
           <AssociationSet Name="FK_SubjectToTimeTableHours_Breaks" Association="TeachersBookModel.FK_SubjectToTimeTableHours_Breaks">
             <End Role="Breaks" EntitySet="Breaks" />
             <End Role="SubjectToTimeTableHours" EntitySet="SubjectToTimeTableHours" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Classes_UserData" Association="TeachersBookModel.FK_Classes_UserData">
-            <End Role="UserData" EntitySet="UserData" />
-            <End Role="Classes" EntitySet="Classes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Lists_Classes" Association="TeachersBookModel.FK_Lists_Classes">
-            <End Role="Classes" EntitySet="Classes" />
-            <End Role="Lists" EntitySet="Lists" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Pupils_Classes" Association="TeachersBookModel.FK_Pupils_Classes">
-            <End Role="Classes" EntitySet="Classes" />
-            <End Role="Pupils" EntitySet="Pupils" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Subjects_Classes" Association="TeachersBookModel.FK_Subjects_Classes">
-            <End Role="Classes" EntitySet="Classes" />
-            <End Role="Subjects" EntitySet="Subjects" />
           </AssociationSet>
           <AssociationSet Name="FK_Ratings_Pupils" Association="TeachersBookModel.FK_Ratings_Pupils">
             <End Role="Pupils" EntitySet="Pupils" />
@@ -468,6 +463,24 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
             <End Role="TimeTableIItems" EntitySet="TimeTableIItems" />
             <End Role="TimeTableRows" EntitySet="TimeTableRows" />
           </AssociationSet>
+          <EntitySet Name="Classes" EntityType="TeachersBookModel.Classes" />
+          <AssociationSet Name="FK_Classes_SchoolYears" Association="TeachersBookModel.FK_Classes_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lists_Classes" Association="TeachersBookModel.FK_Lists_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Lists" EntitySet="Lists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pupils_Classes" Association="TeachersBookModel.FK_Pupils_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Pupils" EntitySet="Pupils" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subjects_Classes" Association="TeachersBookModel.FK_Subjects_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="TeachersBookModel.sysdiagrams" />
         </EntityContainer>
         <EntityType Name="Breaks">
           <Key>
@@ -476,18 +489,6 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SubjectToTimeTableHours" Relationship="TeachersBookModel.FK_SubjectToTimeTableHours_Breaks" FromRole="Breaks" ToRole="SubjectToTimeTableHours" />
-        </EntityType>
-        <EntityType Name="Classes">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="teacher" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="UserData" Relationship="TeachersBookModel.FK_Classes_UserData" FromRole="Classes" ToRole="UserData" />
-          <NavigationProperty Name="Lists" Relationship="TeachersBookModel.FK_Lists_Classes" FromRole="Classes" ToRole="Lists" />
-          <NavigationProperty Name="Pupils" Relationship="TeachersBookModel.FK_Pupils_Classes" FromRole="Classes" ToRole="Pupils" />
-          <NavigationProperty Name="Subjects" Relationship="TeachersBookModel.FK_Subjects_Classes" FromRole="Classes" ToRole="Subjects" />
         </EntityType>
         <EntityType Name="Lists">
           <Key>
@@ -511,8 +512,8 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
           <Property Name="postalCode" Type="Int32" />
           <Property Name="city" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="class" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Classes" Relationship="TeachersBookModel.FK_Pupils_Classes" FromRole="Pupils" ToRole="Classes" />
           <NavigationProperty Name="Ratings" Relationship="TeachersBookModel.FK_Ratings_Pupils" FromRole="Pupils" ToRole="Ratings" />
+          <NavigationProperty Name="Classes" Relationship="TeachersBookModel.FK_Pupils_Classes" FromRole="Pupils" ToRole="Classes" />
         </EntityType>
         <EntityType Name="Ratings">
           <Key>
@@ -536,6 +537,8 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
           <NavigationProperty Name="UserData" Relationship="TeachersBookModel.FK_SchoolYears_UserData" FromRole="SchoolYears" ToRole="UserData" />
           <NavigationProperty Name="Subjects" Relationship="TeachersBookModel.FK_Subjects_SchoolYears" FromRole="SchoolYears" ToRole="Subjects" />
           <NavigationProperty Name="TimeTables" Relationship="TeachersBookModel.FK_TimeTables_SchoolYears" FromRole="SchoolYears" ToRole="TimeTables" />
+          <NavigationProperty Name="Classes" Relationship="TeachersBookModel.FK_Classes_SchoolYears" FromRole="SchoolYears" ToRole="Classes" />
+          <Property Name="selected" Type="Boolean" />
         </EntityType>
         <EntityType Name="Subjects">
           <Key>
@@ -546,10 +549,10 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
           <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="color" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
           <Property Name="schoolYearId" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Classes" Relationship="TeachersBookModel.FK_Subjects_Classes" FromRole="Subjects" ToRole="Classes" />
           <NavigationProperty Name="Ratings" Relationship="TeachersBookModel.FK_Ratings_Subjects" FromRole="Subjects" ToRole="Ratings" />
           <NavigationProperty Name="SchoolYears" Relationship="TeachersBookModel.FK_Subjects_SchoolYears" FromRole="Subjects" ToRole="SchoolYears" />
           <NavigationProperty Name="SubjectToTimeTableHours" Relationship="TeachersBookModel.FK_SubjectToTimeTableHours_Subjects" FromRole="Subjects" ToRole="SubjectToTimeTableHours" />
+          <NavigationProperty Name="Classes" Relationship="TeachersBookModel.FK_Subjects_Classes" FromRole="Subjects" ToRole="Classes" />
         </EntityType>
         <EntityType Name="TimeTableIItems">
           <Key>
@@ -595,7 +598,6 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
           <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="isActive" Type="Boolean" Nullable="false" />
           <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Classes" Relationship="TeachersBookModel.FK_Classes_UserData" FromRole="UserData" ToRole="Classes" />
           <NavigationProperty Name="SchoolYears" Relationship="TeachersBookModel.FK_SchoolYears_UserData" FromRole="UserData" ToRole="SchoolYears" />
         </EntityType>
         <EntityType Name="SubjectToTimeTableHours">
@@ -618,54 +620,6 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
             </Principal>
             <Dependent Role="SubjectToTimeTableHours">
               <PropertyRef Name="breakId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Classes_UserData">
-          <End Type="TeachersBookModel.UserData" Role="UserData" Multiplicity="1" />
-          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserData">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Classes">
-              <PropertyRef Name="teacher" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Lists_Classes">
-          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="1" />
-          <End Type="TeachersBookModel.Lists" Role="Lists" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Classes">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Lists">
-              <PropertyRef Name="classId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Pupils_Classes">
-          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="1" />
-          <End Type="TeachersBookModel.Pupils" Role="Pupils" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Classes">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Pupils">
-              <PropertyRef Name="class" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Subjects_Classes">
-          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="0..1" />
-          <End Type="TeachersBookModel.Subjects" Role="Subjects" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Classes">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Subjects">
-              <PropertyRef Name="class" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -769,6 +723,76 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
           <End Type="TeachersBookModel.TimeTableIItems" Role="TimeTableIItems" Multiplicity="*" />
           <End Type="TeachersBookModel.TimeTableRows" Role="TimeTableRows" Multiplicity="*" />
         </Association>
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="schoolYearId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="SchoolYears" Relationship="TeachersBookModel.FK_Classes_SchoolYears" FromRole="Classes" ToRole="SchoolYears" />
+          <NavigationProperty Name="Lists" Relationship="TeachersBookModel.FK_Lists_Classes" FromRole="Classes" ToRole="Lists" />
+          <NavigationProperty Name="Pupils" Relationship="TeachersBookModel.FK_Pupils_Classes" FromRole="Classes" ToRole="Pupils" />
+          <NavigationProperty Name="Subjects" Relationship="TeachersBookModel.FK_Subjects_Classes" FromRole="Classes" ToRole="Subjects" />
+        </EntityType>
+        <Association Name="FK_Classes_SchoolYears">
+          <End Type="TeachersBookModel.SchoolYears" Role="SchoolYears" Multiplicity="1" />
+          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="schoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lists_Classes">
+          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="1" />
+          <End Type="TeachersBookModel.Lists" Role="Lists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Lists">
+              <PropertyRef Name="classId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pupils_Classes">
+          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="1" />
+          <End Type="TeachersBookModel.Pupils" Role="Pupils" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pupils">
+              <PropertyRef Name="class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subjects_Classes">
+          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="0..1" />
+          <End Type="TeachersBookModel.Subjects" Role="Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -779,15 +803,6 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
             <EntityTypeMapping TypeName="TeachersBookModel.Breaks">
               <MappingFragment StoreEntitySet="Breaks">
                 <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Classes">
-            <EntityTypeMapping TypeName="TeachersBookModel.Classes">
-              <MappingFragment StoreEntitySet="Classes">
-                <ScalarProperty Name="teacher" ColumnName="teacher" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -830,6 +845,7 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
           <EntitySetMapping Name="SchoolYears">
             <EntityTypeMapping TypeName="TeachersBookModel.SchoolYears">
               <MappingFragment StoreEntitySet="SchoolYears">
+                <ScalarProperty Name="selected" ColumnName="selected" />
                 <ScalarProperty Name="teacher" ColumnName="teacher" />
                 <ScalarProperty Name="schoolYear" ColumnName="schoolYear" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -907,6 +923,26 @@ Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems'
               <ScalarProperty Name="id" ColumnName="hourId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="TeachersBookModel.Classes">
+              <MappingFragment StoreEntitySet="Classes">
+                <ScalarProperty Name="schoolYearId" ColumnName="schoolYearId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TeachersBookModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

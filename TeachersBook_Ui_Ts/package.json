@@ -1,14 +1,15 @@
 {
-  "name": "coparion-sharepoint",
+  "name": "Teachers Book",
   "version": "1.0.0",
-  "description": "coparion SharePoint DealFlowManagement",
+  "description": "Teachers Book UI",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "KI performance GmbH",
+  "author": "Florian Heck",
   "license": "ISC",
   "dependencies": {
+    "@types/jquery.colorpicker": "^1.4.31",
     "@types/knockout.validation": "0.0.34",
     "bluebird": "^3.5.0",
     "gentelella": "^1.3.0",

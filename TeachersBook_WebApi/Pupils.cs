@@ -29,8 +29,8 @@ namespace TeachersBook_WebApi
         public string city { get; set; }
         public System.Guid @class { get; set; }
     
-        public virtual Classes Classes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ratings> Ratings { get; set; }
+        public virtual Classes Classes { get; set; }
     }
 }
