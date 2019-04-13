@@ -9,6 +9,17 @@ export interface IListProps { listContent: TableViewModel;}
 
 export class Table extends React.Component<IListProps> {
     
+    public shouldComponentUpdate(nextProps: IListProps) {
+        let returnValue = false;
+        console.log(nextProps);
+        if(nextProps.listContent.body.length !== this.props.listContent.body.length) {
+            returnValue = true;
+        }
+        
+        return returnValue;
+        
+    }
+
     public render() {
 
         const rows = this.props.listContent.body.map((rowsContent: TableRowViewModel) =>

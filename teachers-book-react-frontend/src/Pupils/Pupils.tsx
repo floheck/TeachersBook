@@ -1,8 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Modal from 'react-bootstrap/Modal';
 import Nav from 'react-bootstrap/Nav';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Row from 'react-bootstrap/Row';
@@ -19,13 +17,15 @@ import { NavigationViewModel } from '../ViewModels/Navigation/navigationViewMode
 import { PupilsViewModel } from '../ViewModels/Pupils/PupilsViewModel';
 import { Table } from '../Components/Table/Table';
 import { ViewModelFactory } from 'src/ViewModels/viewModelFactory';
-import InputText from '../Components/Controls/InputText';
+import PupilDetailsDialog from './PupilDetailsDialog';
 
 class Pupils extends React.Component<any, any> {
   
   public navigationViewModel = new NavigationViewModel();
   public viewModelFactory = new ViewModelFactory();
   public pupilsViewModel: PupilsViewModel;
+
+  private myRef = React.createRef<PupilDetailsDialog>();
 
   constructor(props: any, context: any) {
     super(props, context);
@@ -35,26 +35,35 @@ class Pupils extends React.Component<any, any> {
     this.handleToggle = this.handleToggle.bind(this);
     
     this.handleModalShow = this.handleModalShow.bind(this);
-    this.handleModalClose = this.handleModalClose.bind(this);
     this.handleModalSave = this.handleModalSave.bind(this);
+    this.handleTabChange = this.handleTabChange.bind(this);
 
     this.state = {
       toggleState: true,
-      modalShow: false
+      selectedTab: "Klasse 1"
     }
   }
 
-  public handleModalClose() {
-    this.setState({ modalShow: false });
-  }
-
   public handleModalShow() {
-    this.setState({ modalShow: true });
+    this.myRef.current!.handleModalShow();
   }
 
   public handleModalSave() {
-    this.pupilsViewModel.addNewClassModal.save();
-    this.handleModalClose();
+    const classToAddPupil = this.pupilsViewModel.classes.filter((classItem: ClassViewModel) => {
+      return classItem.name === this.state.selectedTab;
+    })[0];
+
+    classToAddPupil.addPupil("", 
+                              this.pupilsViewModel.addNewPupilModal.newPupilFirstname.value, 
+                              this.pupilsViewModel.addNewPupilModal.newPupilSurname.value, 
+                              this.pupilsViewModel.addNewPupilModal.newPupilAddress.value,
+                              parseInt(this.pupilsViewModel.addNewPupilModal.newPupilZipCode.value, 2),
+                              this.pupilsViewModel.addNewPupilModal.newPupilCity.value);
+    this.forceUpdate();
+  }
+
+  public handleTabChange(item: string) {
+    this.setState({selectedTab: item});
   }
 
   public handleToggle() {
@@ -65,7 +74,7 @@ class Pupils extends React.Component<any, any> {
 
     const classes = this.pupilsViewModel.classes.map((classItem: ClassViewModel) => 
       <Nav.Item key="item">
-          <Nav.Link eventKey={ classItem.name.trim() } key="link">{ classItem.name }</Nav.Link>
+          <Nav.Link eventKey={ classItem.name.trim() } key="link" onSelect={ this.handleTabChange }>{ classItem.name }</Nav.Link>
       </Nav.Item>
     );
 
@@ -80,7 +89,7 @@ class Pupils extends React.Component<any, any> {
         <Navigation viewModel={ this.navigationViewModel } handleToggle={ this.handleToggle }  key="navigation" />,
         <ContentContainer key="ContentContaierPupils" handleToggle={ this.navigationViewModel.navBarExpanded }>
           <ContentContainerHeader>
-            Schüler je Klasse
+            Schüler
           </ContentContainerHeader>
           <ContentContainerBody>
             <Tab.Container id="left-tabs-example" defaultActiveKey="Klasse 1" key="TabContainer">
@@ -91,10 +100,10 @@ class Pupils extends React.Component<any, any> {
                     </Nav>              
                     <OverlayTrigger
                       key="Overlay"
-                      placement="top"
+                      placement="left"
                       overlay={
                         <Tooltip id="id">
-                          Neue Klasse hinzufügen.
+                          Schüler hinzufügen.
                         </Tooltip>
                       }
                     >
@@ -110,31 +119,7 @@ class Pupils extends React.Component<any, any> {
                   </Col>
               </Row>
             </Tab.Container>,
-            <Modal show={this.state.modalShow} onHide={this.handleModalClose} key="Modal">
-              <Modal.Header closeButton={true}>
-                <Modal.Title>Neue Klasse</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <Row>
-                  <Col sm={12}>
-                    <p>Bitte geben Sie den Namen an:</p>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col sm={12}>
-                    <InputText data={this.pupilsViewModel.addNewClassModal.newClassName} />
-                  </Col>
-                </Row>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={this.handleModalClose}>
-                  Schließen
-                </Button>
-                <Button variant="primary" onClick={this.handleModalSave}>
-                  Speichern
-                </Button>
-              </Modal.Footer>
-            </Modal>
+            <PupilDetailsDialog ref={ this.myRef } pupilsViewModel={this.pupilsViewModel} selectedKlassName={this.state.selectedKlassName} saveEvent={this.handleModalSave} />
           </ContentContainerBody>
         </ContentContainer>
       ]

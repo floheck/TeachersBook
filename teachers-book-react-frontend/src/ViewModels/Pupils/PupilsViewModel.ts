@@ -1,13 +1,14 @@
 import { BaseViewModel } from '../baseViewModel';
 import { ClassViewModel } from '../ClassViewModel/ClassViewModel';
-import { AddNewClassModalViewMode } from './AddNewClassModalViewModel';
+import { AddNewPupilModalViewMode } from './AddNewPupilModalViewModel';
+import { PupilViewModel } from '../PupilViewModel/PupilViewModel';
 
 export class PupilsViewModel implements BaseViewModel {
     public classes = new Array<ClassViewModel>();
-    public addNewClassModal: AddNewClassModalViewMode;
+    public addNewPupilModal: AddNewPupilModalViewMode;
 
     constructor() {
-        this.addNewClassModal = new AddNewClassModalViewMode(this.classes);
+        this.addNewPupilModal = new AddNewPupilModalViewMode();
     }
 
     // public fromModel() {
@@ -27,5 +28,9 @@ export class PupilsViewModel implements BaseViewModel {
 
     public addClass(newClass: ClassViewModel) {
         this.classes.push(newClass);
+    }
+
+    public addPupil(newPupil: PupilViewModel, classIndex: number) {
+        this.classes[classIndex].addPupil(newPupil.nickname, newPupil.firstname, newPupil.surname, newPupil.address, newPupil.zipCode, newPupil.city);
     }
 }

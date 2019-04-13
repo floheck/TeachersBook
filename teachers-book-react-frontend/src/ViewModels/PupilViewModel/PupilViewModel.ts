@@ -11,5 +11,6 @@ export class PupilViewModel extends BaseViewModel {
     public email: string;
     public phone: string;
     public sex: string;
+    public contactPerson: string;
     public class = new ClassViewModel();
 }
