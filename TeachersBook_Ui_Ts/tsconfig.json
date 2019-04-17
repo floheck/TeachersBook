@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": [ "es2015", "es2015.iterable", "dom", "dom.iterable", "es2015.promise" ],
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5"
+  },
+  "compileOnSave": true,
+  "exclude": [
+    "js/@types",
+    "node_modules",
+    "wwwroot"
+  ]
+}

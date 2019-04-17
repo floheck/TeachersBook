@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "modules/timetable.css",
+    "inputFile": "modules/timetable.less"
+  },
+  {
+    "outputFile": "styles/indexStyles.css",
+    "inputFile": "styles/indexStyles.less"
+  },
+  {
+    "outputFile": "sections/timetable/Timetable.css",
+    "inputFile": "sections/timetable/Timetable.less"
+  }
+]

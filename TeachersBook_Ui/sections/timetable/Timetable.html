@@ -1,0 +1,213 @@
+﻿<div id="time-table" class="content-wrapper time-table">
+	<div class="parallax"></div>
+		<div class="content-timetable">
+		<div>
+		    <ul class="nav navbar-right panel_toolbox">
+		        <li>
+		            <a id="editTimetable" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+		        </li>
+		    </ul>
+		</div>
+		<div style="margin: 0px 20px;">
+		    <table id="timetable" class="table table-striped">
+		        <thead>
+		            <tr>
+		                <th></th>
+		                <th>Montag</th>
+		                <th>Dienstag</th>
+		                <th>Mittwoch</th>
+		                <th>Donnerstag</th>
+		                <th>Freitag</th>
+		            </tr>
+		        </thead>
+                <tbody data-bind="foreach: {data: timetable, as: 'row'}">
+                    <!-- ko if: row.rowtype === 'subjects' -->
+                    <tr data-bind="template: {name: 'subjectTimetableTempl', foreach: row.subjects}"></tr>
+                    <!-- /ko -->
+                    <!-- ko if: row.rowtype === 'break'-->
+                    <tr style="background-color:wheat;" data-bind="template: {name: 'subjectTimetableTempl', foreach: row.subjects}"></tr>
+                    <!-- /ko -->
+		        </tbody>
+		    </table>
+		</div>
+		<div id="editTimetableWrapper" style="width:100%;">
+		    <div id="subjectsRow" class="row">      
+		        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		            <div class="timetable-subject-wrapper" data-bind="template: { name: 'subjectTempl', foreach: subjects, afterRender: activateTooltips}">
+		            </div>
+		            <div class="timetable-add-subject-button" data-bind="click: openAddNewSubjectDialog">
+		                <i class="fa fa-plus" aria-hidden="true"></i>
+                    </div>
+		        </div>
+		    </div>
+        </div>
+        <div class="modal fade" id="modal-AddSubject" role="dialog">
+            <div class="modal-dialog modal-sm" style="width:50%;">
+                <div class="modal-content">
+                    <div class="modal-header teachersbook-modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 id="lst_AddSubjectModalDialogHeader" class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addNewSubjectForm" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                                    <span id="lst_AddSubjectNameLabel"></span><span class="required">*</span>
+                                </label>
+                                <div class="col-md-7 col-sm-7 col-xs-12">
+                                    <input type="text" id="first-name" data-bind="value: newSubjectName" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                                    <span id="lst_AddSubjectClassLabel"></span><span class="required">*</span>
+                                </label>
+                                <div class="col-md-7 col-sm-7 col-xs-12">
+                                    <input type="text" id="last-name" data-bind="value: newSubjectSchoolGrade" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    <span id="lst_AddSubjectColorLabel"></span><span class="required">*</span>
+                                </label>
+                                <div class="col-md-7 col-sm-7 col-xs-12">
+                                    <div id="cp2" class="input-group colorpicker-component">
+                                        <input type="text" value="#00AABB" data-bind="value: newSubjectColor" required="required" class="form-control" />
+                                        <span class="input-group-addon"><i></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <button type="submit" data-bind="click: addNewSubject" class="btn"><span id="lst_AddNewSubjectButtonLabel"></span></button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+<script id="subjectTimetableTempl" type="text/html">
+    <!-- ko if: row.rowtype === 'subjects' -->
+    <td data-bind="css: (day === 0 ? 'time-cell' : '')">
+        <div class="timetabel-subject-container">
+	    <li class="draggable timetable-subject" draggable="false" data-bind="event: {
+	            dragover:  function(data, event){event.preventDefault();},
+	            dragenter: function(data, event){
+	                var element = $(event.target)
+	                if(element.hasClass('draggable'))
+	                     element.toggleClass('timetable-drag-over');
+	                event.preventDefault();
+	            },
+	            dragleave: function(data, event, $index){
+	                var element = $(event.target)
+	                if(element.hasClass('draggable'))
+	                     element.toggleClass('timetable-drag-over');
+	                event.preventDefault();
+	            },
+	            drop: function(data, event){
+	                jQuery(event.target).removeClass('timetable-drag-over');
+	                $root.replaceSubjectInTimetable(data, event);
+                },
+                click: $root.clickSubjectLabel
+
+	        },
+	          style :{
+	               'background-color' :  content.color
+	        },
+            css : ($index() == 0 ? 'timetable-no-border' : ''),
+            visible: labelVisible
+            ">
+            <div class="timetable-subject-text-wrapper" data-bind="css: (hasSubject() === false ? '' : 'has-subject')">
+                <div class="timetable-subject-text">
+                    <div class="timetable-subject-name" data-bind='html: content.name'></div> <div class="timetable-subject-class" data-bind="html: content.schoolGrade"></div>
+                </div>
+                <div class="timetable-remove-subject" data-bind="click: $root.deleteSubject">
+                    <span>
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </span>
+                </div>
+			</div>
+        </li>
+        <!-- ko if: day === 0 -->
+	    <div class="timetable-inline-edit-wrapper" data-bind="visible: inlineEditingVisible">
+	        <input type="text" data-bind="value: content.name, attr: {'id': 'txt_' + hour + '_' + day}, event: { 'keyup': $root.saveInlineEditingChanges }" class="timetable-hour-time-textbox" />
+	        <i class="fa fa-check" aria-hidden="true" data-bind="click: $root.saveInlineEditingChanges"></i>
+	        <i class="fa fa-times" aria-hidden="true" data-bind="click: $root.discardInlineEditingChanges" ></i>
+        </div>
+        <!-- /ko -->
+        </div>
+        <!-- ko if: day === 0 -->
+        <div class="timetable-add-row">
+            <i class="fa fa-plus-square" aria-hidden="true" data-bind="click: $root.addNewSubjectRow" ></i>
+        </div>
+        <!-- /ko -->
+    </td>
+    <!-- /ko -->
+    <!-- ko if: row.rowtype === 'break' -->
+    <td data-bind="css: (day === 0 ? 'time-cell' : '')">
+        <div class="timetabel-subject-container">
+            <li class="timetable-subject timetable-no-border" 
+                data-bind="style: {'background-color' : content.color},
+                           click: $root.clickSubjectLabel,
+                           visible: labelVisible">
+                <div class="timetable-subject-text-wrapper" data-bind="css: (hasSubject() === false ? '' : 'has-subject')">
+                    <div class="timetable-subject-text">
+                        <div class="timetable-subject-name" data-bind='html: content.name'></div> <div class="timetable-subject-class" data-bind="html: content.schoolGrade"></div>
+                    </div>
+                </div>
+            </li>
+            <div class="timetable-inline-edit-wrapper" data-bind="visible: inlineEditingVisible">
+                <input type="text" data-bind="value: content.name, attr: {'id': 'txt_' + hour + '_' + day}" class="timetable-hour-time-textbox" />
+                <i class="fa fa-check" aria-hidden="true" data-bind="click: $root.saveInlineEditingChanges"></i>
+                <i class="fa fa-times" aria-hidden="true" data-bind="click: $root.discardInlineEditingChanges"></i>
+            </div>
+        </div>        
+        <!-- ko if: day === 0 -->
+        <div class="timetable-add-row">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+        </div>
+        <!-- /ko -->
+    </td>
+    <!-- /ko -->
+</script>
+<script id="subjectTempl" type="text/html">
+    <li class="draggable timetable-subject red-tooltip timetable-subject-dragable" data-toggle="tooltip" title="In den Stundenplan ziehen um zu übernehmen" data-placement="top" draggable="true" data-bind="event:{
+	      dragstart:   function(data, event){
+	                    jQuery(event.target).addClass('timetable-drag-source');
+	                    $root.dragItem(data);
+	                    return $(event.target).hasClass('draggable');},
+
+	       dragend:   function(data, event){
+	                   jQuery(event.target).removeClass('timetable-drag-source')
+	                   return true;
+	       },
+	       dragover:  function(data, event){event.preventDefault();},
+	       dragenter: function(data, event){
+	                var element = $(event.target)
+	                if(element.hasClass('draggable'))
+	                     element.toggleClass('timetable-drag-over');
+	                event.preventDefault();
+	        },
+	       dragleave: function(data, event, $index){
+	                var element = $(event.target)
+	                if(element.hasClass('draggable'))
+	                     element.toggleClass('timetable-drag-over');
+	                event.preventDefault();
+	        }
+        }, 
+        style:{ 
+            'background-color' :  color 
+        }">
+        <div class="timetable-subject-text-wrapper timetable-subject-choos-text-wrapper">
+            <div class="timetable-subject-text timetable-subject-choos-text">
+                <div class="timetable-subject-name" data-bind='html: name'></div> <div class="timetable-subject-class" data-bind="html: schoolGrade"></div>
+            </div>
+        </div>
+
+    </li>
+</script>

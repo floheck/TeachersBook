@@ -1,0 +1,969 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TeachersBookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Breaks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="schoolYearId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lists">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+          <Property Name="value" Type="varchar" MaxLength="100" />
+          <Property Name="classId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pupils">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="nickName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="100" />
+          <Property Name="lastName" Type="varchar" MaxLength="100" />
+          <Property Name="adress" Type="varchar" MaxLength="100" />
+          <Property Name="postalCode" Type="int" />
+          <Property Name="city" Type="varchar" MaxLength="100" />
+          <Property Name="class" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="rating" Type="int" />
+          <Property Name="comment" Type="text" />
+          <Property Name="subjectId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="pupilId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SchoolYears">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="schoolYear" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="teacher" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="selected" Type="bit" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="class" Type="uniqueidentifier" />
+          <Property Name="description" Type="varchar" MaxLength="100" />
+          <Property Name="color" Type="varchar" MaxLength="7" />
+          <Property Name="schoolYearId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Während der Generierung sind Fehler aufgetreten:
+Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.SubjectToTimeTableHours' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
+        <EntityType Name="SubjectToTimeTableHours">
+          <Key>
+            <PropertyRef Name="timetableId" />
+          </Key>
+          <Property Name="timetableId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="subjectId" Type="uniqueidentifier" />
+          <Property Name="breakId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TimeTableIItems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="day" Type="int" />
+          <Property Name="type" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TimeTableRows">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="timetable" Type="uniqueidentifier" />
+          <Property Name="start" Type="varchar" MaxLength="13" />
+          <Property Name="end" Type="varchar" MaxLength="13" />
+          <Property Name="rowNo" Type="int" />
+        </EntityType>
+        <!--Während der Generierung sind Fehler aufgetreten:
+Warnung 6002: Für Tabelle/Sicht 'TeachersBook.dbo.TimeTableRowToTimeTableItems' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
+        <EntityType Name="TimeTableRowToTimeTableItems">
+          <Key>
+            <PropertyRef Name="rowId" />
+            <PropertyRef Name="hourId" />
+          </Key>
+          <Property Name="rowId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="hourId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimeTables">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="schoolYear" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="char" MaxLength="64" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="lastname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Classes_SchoolYears">
+          <End Role="SchoolYears" Type="Self.SchoolYears" Multiplicity="1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="schoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lists_Classes">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="Lists" Type="Self.Lists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Lists">
+              <PropertyRef Name="classId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pupils_Classes">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="Pupils" Type="Self.Pupils" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pupils">
+              <PropertyRef Name="class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratings_Pupils">
+          <End Role="Pupils" Type="Self.Pupils" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pupils">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="pupilId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratings_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="subjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SchoolYears_UserData">
+          <End Role="UserData" Type="Self.UserData" Multiplicity="1" />
+          <End Role="SchoolYears" Type="Self.SchoolYears" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SchoolYears">
+              <PropertyRef Name="teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subjects_Classes">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="0..1" />
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subjects_SchoolYears">
+          <End Role="SchoolYears" Type="Self.SchoolYears" Multiplicity="1" />
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="schoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectToTimeTableHours_Breaks">
+          <End Role="Breaks" Type="Self.Breaks" Multiplicity="0..1" />
+          <End Role="SubjectToTimeTableHours" Type="Self.SubjectToTimeTableHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Breaks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubjectToTimeTableHours">
+              <PropertyRef Name="breakId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectToTimeTableHours_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="SubjectToTimeTableHours" Type="Self.SubjectToTimeTableHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubjectToTimeTableHours">
+              <PropertyRef Name="subjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectToTimeTableHours_TimeTableIItems">
+          <End Role="TimeTableIItems" Type="Self.TimeTableIItems" Multiplicity="1" />
+          <End Role="SubjectToTimeTableHours" Type="Self.SubjectToTimeTableHours" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TimeTableIItems">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubjectToTimeTableHours">
+              <PropertyRef Name="timetableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTableRows_TimeTables">
+          <End Role="TimeTables" Type="Self.TimeTables" Multiplicity="0..1" />
+          <End Role="TimeTableRows" Type="Self.TimeTableRows" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeTables">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTableRows">
+              <PropertyRef Name="timetable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTableRowToTimeTableItems_TimeTableIItems">
+          <End Role="TimeTableIItems" Type="Self.TimeTableIItems" Multiplicity="1" />
+          <End Role="TimeTableRowToTimeTableItems" Type="Self.TimeTableRowToTimeTableItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeTableIItems">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTableRowToTimeTableItems">
+              <PropertyRef Name="hourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTableRowToTimeTableItems_TimeTableRows">
+          <End Role="TimeTableRows" Type="Self.TimeTableRows" Multiplicity="1" />
+          <End Role="TimeTableRowToTimeTableItems" Type="Self.TimeTableRowToTimeTableItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeTableRows">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTableRowToTimeTableItems">
+              <PropertyRef Name="rowId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTables_SchoolYears">
+          <End Role="SchoolYears" Type="Self.SchoolYears" Multiplicity="1" />
+          <End Role="TimeTables" Type="Self.TimeTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTables">
+              <PropertyRef Name="schoolYear" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TeachersBookModelStoreContainer">
+          <EntitySet Name="Breaks" EntityType="Self.Breaks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lists" EntityType="Self.Lists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pupils" EntityType="Self.Pupils" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchoolYears" EntityType="Self.SchoolYears" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeTableIItems" EntityType="Self.TimeTableIItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeTableRows" EntityType="Self.TimeTableRows" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeTables" EntityType="Self.TimeTables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserData" EntityType="Self.UserData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubjectToTimeTableHours" EntityType="Self.SubjectToTimeTableHours" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SubjectToTimeTableHours].[timetableId] AS [timetableId], 
+    [SubjectToTimeTableHours].[subjectId] AS [subjectId], 
+    [SubjectToTimeTableHours].[breakId] AS [breakId]
+    FROM [dbo].[SubjectToTimeTableHours] AS [SubjectToTimeTableHours]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TimeTableRowToTimeTableItems" EntityType="Self.TimeTableRowToTimeTableItems" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TimeTableRowToTimeTableItems].[rowId] AS [rowId], 
+    [TimeTableRowToTimeTableItems].[hourId] AS [hourId]
+    FROM [dbo].[TimeTableRowToTimeTableItems] AS [TimeTableRowToTimeTableItems]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Classes_SchoolYears" Association="Self.FK_Classes_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lists_Classes" Association="Self.FK_Lists_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Lists" EntitySet="Lists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pupils_Classes" Association="Self.FK_Pupils_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Pupils" EntitySet="Pupils" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratings_Pupils" Association="Self.FK_Ratings_Pupils">
+            <End Role="Pupils" EntitySet="Pupils" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratings_Subjects" Association="Self.FK_Ratings_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SchoolYears_UserData" Association="Self.FK_SchoolYears_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subjects_Classes" Association="Self.FK_Subjects_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subjects_SchoolYears" Association="Self.FK_Subjects_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectToTimeTableHours_Breaks" Association="Self.FK_SubjectToTimeTableHours_Breaks">
+            <End Role="Breaks" EntitySet="Breaks" />
+            <End Role="SubjectToTimeTableHours" EntitySet="SubjectToTimeTableHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectToTimeTableHours_Subjects" Association="Self.FK_SubjectToTimeTableHours_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="SubjectToTimeTableHours" EntitySet="SubjectToTimeTableHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectToTimeTableHours_TimeTableIItems" Association="Self.FK_SubjectToTimeTableHours_TimeTableIItems">
+            <End Role="TimeTableIItems" EntitySet="TimeTableIItems" />
+            <End Role="SubjectToTimeTableHours" EntitySet="SubjectToTimeTableHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTableRows_TimeTables" Association="Self.FK_TimeTableRows_TimeTables">
+            <End Role="TimeTables" EntitySet="TimeTables" />
+            <End Role="TimeTableRows" EntitySet="TimeTableRows" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTableRowToTimeTableItems_TimeTableIItems" Association="Self.FK_TimeTableRowToTimeTableItems_TimeTableIItems">
+            <End Role="TimeTableIItems" EntitySet="TimeTableIItems" />
+            <End Role="TimeTableRowToTimeTableItems" EntitySet="TimeTableRowToTimeTableItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTableRowToTimeTableItems_TimeTableRows" Association="Self.FK_TimeTableRowToTimeTableItems_TimeTableRows">
+            <End Role="TimeTableRows" EntitySet="TimeTableRows" />
+            <End Role="TimeTableRowToTimeTableItems" EntitySet="TimeTableRowToTimeTableItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTables_SchoolYears" Association="Self.FK_TimeTables_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="TimeTables" EntitySet="TimeTables" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TeachersBookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TeachersBookEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Breaks" EntityType="TeachersBookModel.Breaks" />
+          <EntitySet Name="Lists" EntityType="TeachersBookModel.Lists" />
+          <EntitySet Name="Pupils" EntityType="TeachersBookModel.Pupils" />
+          <EntitySet Name="Ratings" EntityType="TeachersBookModel.Ratings" />
+          <EntitySet Name="SchoolYears" EntityType="TeachersBookModel.SchoolYears" />
+          <EntitySet Name="Subjects" EntityType="TeachersBookModel.Subjects" />
+          <EntitySet Name="TimeTableIItems" EntityType="TeachersBookModel.TimeTableIItems" />
+          <EntitySet Name="TimeTableRows" EntityType="TeachersBookModel.TimeTableRows" />
+          <EntitySet Name="TimeTables" EntityType="TeachersBookModel.TimeTables" />
+          <EntitySet Name="UserData" EntityType="TeachersBookModel.UserData" />
+          <EntitySet Name="SubjectToTimeTableHours" EntityType="TeachersBookModel.SubjectToTimeTableHours" />
+          <AssociationSet Name="FK_SubjectToTimeTableHours_Breaks" Association="TeachersBookModel.FK_SubjectToTimeTableHours_Breaks">
+            <End Role="Breaks" EntitySet="Breaks" />
+            <End Role="SubjectToTimeTableHours" EntitySet="SubjectToTimeTableHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratings_Pupils" Association="TeachersBookModel.FK_Ratings_Pupils">
+            <End Role="Pupils" EntitySet="Pupils" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratings_Subjects" Association="TeachersBookModel.FK_Ratings_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SchoolYears_UserData" Association="TeachersBookModel.FK_SchoolYears_UserData">
+            <End Role="UserData" EntitySet="UserData" />
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subjects_SchoolYears" Association="TeachersBookModel.FK_Subjects_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTables_SchoolYears" Association="TeachersBookModel.FK_TimeTables_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="TimeTables" EntitySet="TimeTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectToTimeTableHours_Subjects" Association="TeachersBookModel.FK_SubjectToTimeTableHours_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="SubjectToTimeTableHours" EntitySet="SubjectToTimeTableHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectToTimeTableHours_TimeTableIItems" Association="TeachersBookModel.FK_SubjectToTimeTableHours_TimeTableIItems">
+            <End Role="TimeTableIItems" EntitySet="TimeTableIItems" />
+            <End Role="SubjectToTimeTableHours" EntitySet="SubjectToTimeTableHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTableRows_TimeTables" Association="TeachersBookModel.FK_TimeTableRows_TimeTables">
+            <End Role="TimeTables" EntitySet="TimeTables" />
+            <End Role="TimeTableRows" EntitySet="TimeTableRows" />
+          </AssociationSet>
+          <AssociationSet Name="TimeTableRowToTimeTableItems" Association="TeachersBookModel.TimeTableRowToTimeTableItems">
+            <End Role="TimeTableIItems" EntitySet="TimeTableIItems" />
+            <End Role="TimeTableRows" EntitySet="TimeTableRows" />
+          </AssociationSet>
+          <EntitySet Name="Classes" EntityType="TeachersBookModel.Classes" />
+          <AssociationSet Name="FK_Classes_SchoolYears" Association="TeachersBookModel.FK_Classes_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lists_Classes" Association="TeachersBookModel.FK_Lists_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Lists" EntitySet="Lists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pupils_Classes" Association="TeachersBookModel.FK_Pupils_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Pupils" EntitySet="Pupils" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subjects_Classes" Association="TeachersBookModel.FK_Subjects_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="TeachersBookModel.sysdiagrams" />
+        </EntityContainer>
+        <EntityType Name="Breaks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SubjectToTimeTableHours" Relationship="TeachersBookModel.FK_SubjectToTimeTableHours_Breaks" FromRole="Breaks" ToRole="SubjectToTimeTableHours" />
+        </EntityType>
+        <EntityType Name="Lists">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="classId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="TeachersBookModel.FK_Lists_Classes" FromRole="Lists" ToRole="Classes" />
+        </EntityType>
+        <EntityType Name="Pupils">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="nickName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="firstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="lastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="adress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="postalCode" Type="Int32" />
+          <Property Name="city" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="class" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Ratings" Relationship="TeachersBookModel.FK_Ratings_Pupils" FromRole="Pupils" ToRole="Ratings" />
+          <NavigationProperty Name="Classes" Relationship="TeachersBookModel.FK_Pupils_Classes" FromRole="Pupils" ToRole="Classes" />
+        </EntityType>
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="rating" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="subjectId" Type="Guid" Nullable="false" />
+          <Property Name="pupilId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Pupils" Relationship="TeachersBookModel.FK_Ratings_Pupils" FromRole="Ratings" ToRole="Pupils" />
+          <NavigationProperty Name="Subjects" Relationship="TeachersBookModel.FK_Ratings_Subjects" FromRole="Ratings" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="SchoolYears">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="schoolYear" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="teacher" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="UserData" Relationship="TeachersBookModel.FK_SchoolYears_UserData" FromRole="SchoolYears" ToRole="UserData" />
+          <NavigationProperty Name="Subjects" Relationship="TeachersBookModel.FK_Subjects_SchoolYears" FromRole="SchoolYears" ToRole="Subjects" />
+          <NavigationProperty Name="TimeTables" Relationship="TeachersBookModel.FK_TimeTables_SchoolYears" FromRole="SchoolYears" ToRole="TimeTables" />
+          <NavigationProperty Name="Classes" Relationship="TeachersBookModel.FK_Classes_SchoolYears" FromRole="SchoolYears" ToRole="Classes" />
+          <Property Name="selected" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="class" Type="Guid" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="color" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="schoolYearId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Ratings" Relationship="TeachersBookModel.FK_Ratings_Subjects" FromRole="Subjects" ToRole="Ratings" />
+          <NavigationProperty Name="SchoolYears" Relationship="TeachersBookModel.FK_Subjects_SchoolYears" FromRole="Subjects" ToRole="SchoolYears" />
+          <NavigationProperty Name="SubjectToTimeTableHours" Relationship="TeachersBookModel.FK_SubjectToTimeTableHours_Subjects" FromRole="Subjects" ToRole="SubjectToTimeTableHours" />
+          <NavigationProperty Name="Classes" Relationship="TeachersBookModel.FK_Subjects_Classes" FromRole="Subjects" ToRole="Classes" />
+        </EntityType>
+        <EntityType Name="TimeTableIItems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="day" Type="Int32" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SubjectToTimeTableHours" Relationship="TeachersBookModel.FK_SubjectToTimeTableHours_TimeTableIItems" FromRole="TimeTableIItems" ToRole="SubjectToTimeTableHours" />
+          <NavigationProperty Name="TimeTableRows" Relationship="TeachersBookModel.TimeTableRowToTimeTableItems" FromRole="TimeTableIItems" ToRole="TimeTableRows" />
+        </EntityType>
+        <EntityType Name="TimeTableRows">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="timetable" Type="Guid" />
+          <Property Name="start" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="end" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="rowNo" Type="Int32" />
+          <NavigationProperty Name="TimeTables" Relationship="TeachersBookModel.FK_TimeTableRows_TimeTables" FromRole="TimeTableRows" ToRole="TimeTables" />
+          <NavigationProperty Name="TimeTableIItems" Relationship="TeachersBookModel.TimeTableRowToTimeTableItems" FromRole="TimeTableRows" ToRole="TimeTableIItems" />
+        </EntityType>
+        <EntityType Name="TimeTables">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="schoolYear" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="SchoolYears" Relationship="TeachersBookModel.FK_TimeTables_SchoolYears" FromRole="TimeTables" ToRole="SchoolYears" />
+          <NavigationProperty Name="TimeTableRows" Relationship="TeachersBookModel.FK_TimeTableRows_TimeTables" FromRole="TimeTables" ToRole="TimeTableRows" />
+        </EntityType>
+        <EntityType Name="UserData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="firstname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="lastname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SchoolYears" Relationship="TeachersBookModel.FK_SchoolYears_UserData" FromRole="UserData" ToRole="SchoolYears" />
+        </EntityType>
+        <EntityType Name="SubjectToTimeTableHours">
+          <Key>
+            <PropertyRef Name="timetableId" />
+          </Key>
+          <Property Name="timetableId" Type="Guid" Nullable="false" />
+          <Property Name="subjectId" Type="Guid" />
+          <Property Name="breakId" Type="Guid" />
+          <NavigationProperty Name="Breaks" Relationship="TeachersBookModel.FK_SubjectToTimeTableHours_Breaks" FromRole="SubjectToTimeTableHours" ToRole="Breaks" />
+          <NavigationProperty Name="Subjects" Relationship="TeachersBookModel.FK_SubjectToTimeTableHours_Subjects" FromRole="SubjectToTimeTableHours" ToRole="Subjects" />
+          <NavigationProperty Name="TimeTableIItems" Relationship="TeachersBookModel.FK_SubjectToTimeTableHours_TimeTableIItems" FromRole="SubjectToTimeTableHours" ToRole="TimeTableIItems" />
+        </EntityType>
+        <Association Name="FK_SubjectToTimeTableHours_Breaks">
+          <End Type="TeachersBookModel.Breaks" Role="Breaks" Multiplicity="0..1" />
+          <End Type="TeachersBookModel.SubjectToTimeTableHours" Role="SubjectToTimeTableHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Breaks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubjectToTimeTableHours">
+              <PropertyRef Name="breakId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratings_Pupils">
+          <End Type="TeachersBookModel.Pupils" Role="Pupils" Multiplicity="1" />
+          <End Type="TeachersBookModel.Ratings" Role="Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pupils">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="pupilId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratings_Subjects">
+          <End Type="TeachersBookModel.Subjects" Role="Subjects" Multiplicity="1" />
+          <End Type="TeachersBookModel.Ratings" Role="Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="subjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SchoolYears_UserData">
+          <End Type="TeachersBookModel.UserData" Role="UserData" Multiplicity="1" />
+          <End Type="TeachersBookModel.SchoolYears" Role="SchoolYears" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserData">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SchoolYears">
+              <PropertyRef Name="teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subjects_SchoolYears">
+          <End Type="TeachersBookModel.SchoolYears" Role="SchoolYears" Multiplicity="1" />
+          <End Type="TeachersBookModel.Subjects" Role="Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="schoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTables_SchoolYears">
+          <End Type="TeachersBookModel.SchoolYears" Role="SchoolYears" Multiplicity="1" />
+          <End Type="TeachersBookModel.TimeTables" Role="TimeTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTables">
+              <PropertyRef Name="schoolYear" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectToTimeTableHours_Subjects">
+          <End Type="TeachersBookModel.Subjects" Role="Subjects" Multiplicity="0..1" />
+          <End Type="TeachersBookModel.SubjectToTimeTableHours" Role="SubjectToTimeTableHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubjectToTimeTableHours">
+              <PropertyRef Name="subjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectToTimeTableHours_TimeTableIItems">
+          <End Type="TeachersBookModel.TimeTableIItems" Role="TimeTableIItems" Multiplicity="1" />
+          <End Type="TeachersBookModel.SubjectToTimeTableHours" Role="SubjectToTimeTableHours" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TimeTableIItems">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SubjectToTimeTableHours">
+              <PropertyRef Name="timetableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTableRows_TimeTables">
+          <End Type="TeachersBookModel.TimeTables" Role="TimeTables" Multiplicity="0..1" />
+          <End Type="TeachersBookModel.TimeTableRows" Role="TimeTableRows" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeTables">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTableRows">
+              <PropertyRef Name="timetable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TimeTableRowToTimeTableItems">
+          <End Type="TeachersBookModel.TimeTableIItems" Role="TimeTableIItems" Multiplicity="*" />
+          <End Type="TeachersBookModel.TimeTableRows" Role="TimeTableRows" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="schoolYearId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="SchoolYears" Relationship="TeachersBookModel.FK_Classes_SchoolYears" FromRole="Classes" ToRole="SchoolYears" />
+          <NavigationProperty Name="Lists" Relationship="TeachersBookModel.FK_Lists_Classes" FromRole="Classes" ToRole="Lists" />
+          <NavigationProperty Name="Pupils" Relationship="TeachersBookModel.FK_Pupils_Classes" FromRole="Classes" ToRole="Pupils" />
+          <NavigationProperty Name="Subjects" Relationship="TeachersBookModel.FK_Subjects_Classes" FromRole="Classes" ToRole="Subjects" />
+        </EntityType>
+        <Association Name="FK_Classes_SchoolYears">
+          <End Type="TeachersBookModel.SchoolYears" Role="SchoolYears" Multiplicity="1" />
+          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="schoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lists_Classes">
+          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="1" />
+          <End Type="TeachersBookModel.Lists" Role="Lists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Lists">
+              <PropertyRef Name="classId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pupils_Classes">
+          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="1" />
+          <End Type="TeachersBookModel.Pupils" Role="Pupils" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pupils">
+              <PropertyRef Name="class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subjects_Classes">
+          <End Type="TeachersBookModel.Classes" Role="Classes" Multiplicity="0..1" />
+          <End Type="TeachersBookModel.Subjects" Role="Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TeachersBookModelStoreContainer" CdmEntityContainer="TeachersBookEntities2">
+          <EntitySetMapping Name="Breaks">
+            <EntityTypeMapping TypeName="TeachersBookModel.Breaks">
+              <MappingFragment StoreEntitySet="Breaks">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lists">
+            <EntityTypeMapping TypeName="TeachersBookModel.Lists">
+              <MappingFragment StoreEntitySet="Lists">
+                <ScalarProperty Name="classId" ColumnName="classId" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pupils">
+            <EntityTypeMapping TypeName="TeachersBookModel.Pupils">
+              <MappingFragment StoreEntitySet="Pupils">
+                <ScalarProperty Name="class" ColumnName="class" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+                <ScalarProperty Name="adress" ColumnName="adress" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="nickName" ColumnName="nickName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="TeachersBookModel.Ratings">
+              <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="pupilId" ColumnName="pupilId" />
+                <ScalarProperty Name="subjectId" ColumnName="subjectId" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchoolYears">
+            <EntityTypeMapping TypeName="TeachersBookModel.SchoolYears">
+              <MappingFragment StoreEntitySet="SchoolYears">
+                <ScalarProperty Name="selected" ColumnName="selected" />
+                <ScalarProperty Name="teacher" ColumnName="teacher" />
+                <ScalarProperty Name="schoolYear" ColumnName="schoolYear" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="TeachersBookModel.Subjects">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="schoolYearId" ColumnName="schoolYearId" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="class" ColumnName="class" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeTableIItems">
+            <EntityTypeMapping TypeName="TeachersBookModel.TimeTableIItems">
+              <MappingFragment StoreEntitySet="TimeTableIItems">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="day" ColumnName="day" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeTableRows">
+            <EntityTypeMapping TypeName="TeachersBookModel.TimeTableRows">
+              <MappingFragment StoreEntitySet="TimeTableRows">
+                <ScalarProperty Name="rowNo" ColumnName="rowNo" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="timetable" ColumnName="timetable" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeTables">
+            <EntityTypeMapping TypeName="TeachersBookModel.TimeTables">
+              <MappingFragment StoreEntitySet="TimeTables">
+                <ScalarProperty Name="schoolYear" ColumnName="schoolYear" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserData">
+            <EntityTypeMapping TypeName="TeachersBookModel.UserData">
+              <MappingFragment StoreEntitySet="UserData">
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubjectToTimeTableHours">
+            <EntityTypeMapping TypeName="TeachersBookModel.SubjectToTimeTableHours">
+              <MappingFragment StoreEntitySet="SubjectToTimeTableHours">
+                <ScalarProperty Name="breakId" ColumnName="breakId" />
+                <ScalarProperty Name="subjectId" ColumnName="subjectId" />
+                <ScalarProperty Name="timetableId" ColumnName="timetableId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="TimeTableRowToTimeTableItems" TypeName="TeachersBookModel.TimeTableRowToTimeTableItems" StoreEntitySet="TimeTableRowToTimeTableItems">
+            <EndProperty Name="TimeTableRows">
+              <ScalarProperty Name="id" ColumnName="rowId" />
+            </EndProperty>
+            <EndProperty Name="TimeTableIItems">
+              <ScalarProperty Name="id" ColumnName="hourId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="TeachersBookModel.Classes">
+              <MappingFragment StoreEntitySet="Classes">
+                <ScalarProperty Name="schoolYearId" ColumnName="schoolYearId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TeachersBookModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
