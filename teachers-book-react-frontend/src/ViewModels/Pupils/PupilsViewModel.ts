@@ -1,14 +1,14 @@
 import { BaseViewModel } from '../baseViewModel';
 import { ClassViewModel } from '../ClassViewModel/ClassViewModel';
-import { AddNewPupilModalViewMode } from './AddNewPupilModalViewModel';
+import { PupilDetailsModalViewMode } from './PupilDetailsModalViewModel';
 import { PupilViewModel } from '../PupilViewModel/PupilViewModel';
 
 export class PupilsViewModel implements BaseViewModel {
     public classes = new Array<ClassViewModel>();
-    public addNewPupilModal: AddNewPupilModalViewMode;
+    public pupilDetailsModal: PupilDetailsModalViewMode;
 
     constructor() {
-        this.addNewPupilModal = new AddNewPupilModalViewMode();
+        this.pupilDetailsModal = new PupilDetailsModalViewMode();
     }
 
     // public fromModel() {

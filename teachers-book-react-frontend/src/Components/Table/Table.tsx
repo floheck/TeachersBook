@@ -5,25 +5,35 @@ import { TableRowHeader } from './TableRowHeader';
 import { TableRow } from './TableRow';
 import '../../styles/table.css';
 
-export interface IListProps { listContent: TableViewModel;}
+export interface IListProps { listContent: TableViewModel, selectEvent: any }
 
-export class Table extends React.Component<IListProps> {
+export class Table extends React.Component<IListProps, any> {
     
+    constructor(props: any, context: any) {
+        super(props, context);
+        this.state = {
+            listContent: this.props.listContent
+        }
+    }
+
     public shouldComponentUpdate(nextProps: IListProps) {
         let returnValue = false;
-        console.log(nextProps);
-        if(nextProps.listContent.body.length !== this.props.listContent.body.length) {
+        
+        if(nextProps.listContent.update) {
+            this.setState({
+                listContent: nextProps.listContent
+            })
+            this.props.listContent.update = false;
             returnValue = true;
         }
         
-        return returnValue;
-        
+        return returnValue;        
     }
 
     public render() {
 
-        const rows = this.props.listContent.body.map((rowsContent: TableRowViewModel) =>
-            <TableRow tableRowContent = {rowsContent.cells} key={1}/>
+        const rows = this.state.listContent.body.map((rowsContent: TableRowViewModel) =>
+            <TableRow tableRow = {rowsContent} id={rowsContent.id} selectEvent={this.props.selectEvent} key={rowsContent.id}/>
         );
 
         return(

@@ -18,6 +18,7 @@ import { PupilsViewModel } from '../ViewModels/Pupils/PupilsViewModel';
 import { Table } from '../Components/Table/Table';
 import { ViewModelFactory } from 'src/ViewModels/viewModelFactory';
 import PupilDetailsDialog from './PupilDetailsDialog';
+import { PupilViewModel } from 'src/ViewModels/PupilViewModel/PupilViewModel';
 
 class Pupils extends React.Component<any, any> {
   
@@ -35,35 +36,81 @@ class Pupils extends React.Component<any, any> {
     this.handleToggle = this.handleToggle.bind(this);
     
     this.handleModalShow = this.handleModalShow.bind(this);
-    this.handleModalSave = this.handleModalSave.bind(this);
+    this.handleModalAddNew = this.handleModalAddNew.bind(this);
+    this.handleModalUpdate = this.handleModalUpdate.bind(this);
+
+    this.handleShowPupilDetails = this.handleShowPupilDetails.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
 
     this.state = {
       toggleState: true,
-      selectedTab: "Klasse 1"
+      selectedTab: "Klasse 1",
+      currentClass: this.pupilsViewModel.classes[0],
+      selectedPupil: null
     }
   }
 
-  public handleModalShow() {
+  public handleModalShow(event: any) {
+    this.pupilsViewModel.pupilDetailsModal.update = false;
+    this.pupilsViewModel.pupilDetailsModal.clearAllFields();
     this.myRef.current!.handleModalShow();
   }
 
-  public handleModalSave() {
+  public handleModalAddNew() {
     const classToAddPupil = this.pupilsViewModel.classes.filter((classItem: ClassViewModel) => {
       return classItem.name === this.state.selectedTab;
     })[0];
 
     classToAddPupil.addPupil("", 
-                              this.pupilsViewModel.addNewPupilModal.newPupilFirstname.value, 
-                              this.pupilsViewModel.addNewPupilModal.newPupilSurname.value, 
-                              this.pupilsViewModel.addNewPupilModal.newPupilAddress.value,
-                              parseInt(this.pupilsViewModel.addNewPupilModal.newPupilZipCode.value, 2),
-                              this.pupilsViewModel.addNewPupilModal.newPupilCity.value);
+                              this.pupilsViewModel.pupilDetailsModal.pupilFirstname.value, 
+                              this.pupilsViewModel.pupilDetailsModal.pupilSurname.value, 
+                              this.pupilsViewModel.pupilDetailsModal.pupilAddress.value,
+                              this.pupilsViewModel.pupilDetailsModal.pupilZipCode.value,
+                              this.pupilsViewModel.pupilDetailsModal.pupilCity.value,
+                              this.pupilsViewModel.pupilDetailsModal.pupilPhone.value,
+                              this.pupilsViewModel.pupilDetailsModal.pupilEmail.value);
     this.forceUpdate();
+  }
+
+  public handleModalUpdate() {
+    const selectedPupil = this.state.selectedPupil as PupilViewModel;
+    selectedPupil.firstname = this.pupilsViewModel.pupilDetailsModal.pupilFirstname.value;
+    selectedPupil.surname = this.pupilsViewModel.pupilDetailsModal.pupilSurname.value;
+    selectedPupil.phone = this.pupilsViewModel.pupilDetailsModal.pupilPhone.value;
+    selectedPupil.email = this.pupilsViewModel.pupilDetailsModal.pupilEmail.value;
+    selectedPupil.address = this.pupilsViewModel.pupilDetailsModal.pupilAddress.value;
+    selectedPupil.zipCode = this.pupilsViewModel.pupilDetailsModal.pupilZipCode.value;
+    selectedPupil.city = this.pupilsViewModel.pupilDetailsModal.pupilCity.value;
+    this.state.currentClass.updatePupil(selectedPupil.id, selectedPupil);
+    this.forceUpdate();
+  }
+
+  public handleShowPupilDetails(item: any) {
+    this.myRef.current!.handleModalShow();
+    this.pupilsViewModel.pupilDetailsModal.update = true;
+    const currentClass = this.state.currentClass as ClassViewModel;
+    const selectedPupilViewModel = currentClass.pupils.filter((pupil: PupilViewModel) => {
+      return pupil.id === item.currentTarget.id;
+    })[0]
+    this.setState({ 
+      selectedPupil: selectedPupilViewModel
+    });
+    this.pupilsViewModel.pupilDetailsModal.pupilFirstname.value = selectedPupilViewModel.firstname;
+    this.pupilsViewModel.pupilDetailsModal.pupilSurname.value = selectedPupilViewModel.surname;
+    this.pupilsViewModel.pupilDetailsModal.pupilAddress.value = selectedPupilViewModel.address;
+    this.pupilsViewModel.pupilDetailsModal.pupilZipCode.value = selectedPupilViewModel.zipCode;
+    this.pupilsViewModel.pupilDetailsModal.pupilCity.value = selectedPupilViewModel.city;
+    this.pupilsViewModel.pupilDetailsModal.pupilEmail.value = selectedPupilViewModel.email;
+    this.pupilsViewModel.pupilDetailsModal.pupilPhone.value = selectedPupilViewModel.phone;
+    console.log(item);
   }
 
   public handleTabChange(item: string) {
     this.setState({selectedTab: item});
+    this.setState( { currentClass:  this.pupilsViewModel.classes.filter((classItem: ClassViewModel) => {
+      return classItem.name === this.state.selectedTab;
+      })[0] 
+    });
   }
 
   public handleToggle() {
@@ -74,13 +121,13 @@ class Pupils extends React.Component<any, any> {
 
     const classes = this.pupilsViewModel.classes.map((classItem: ClassViewModel) => 
       <Nav.Item key="item">
-          <Nav.Link eventKey={ classItem.name.trim() } key="link" onSelect={ this.handleTabChange }>{ classItem.name }</Nav.Link>
+          <Nav.Link eventKey={ classItem.name.trim() } key={classItem.id} onSelect={ this.handleTabChange }>{ classItem.name }</Nav.Link>
       </Nav.Item>
     );
 
     const tabs = this.pupilsViewModel.classes.map((classItem: ClassViewModel) => 
       <Tab.Pane eventKey={classItem.name.trim()} key="tab">
-        <Table listContent={ classItem.getPupilsAsTable() } key="PupilsTable1" />
+        <Table listContent={ classItem.pupilsTable } selectEvent={this.handleShowPupilDetails} key="PupilsTable1" />
       </Tab.Pane>
     );
 
@@ -119,7 +166,7 @@ class Pupils extends React.Component<any, any> {
                   </Col>
               </Row>
             </Tab.Container>,
-            <PupilDetailsDialog ref={ this.myRef } pupilsViewModel={this.pupilsViewModel} selectedKlassName={this.state.selectedKlassName} saveEvent={this.handleModalSave} />
+            <PupilDetailsDialog ref={ this.myRef } modalViewModel={this.pupilsViewModel.pupilDetailsModal} selectedKlassName={this.state.selectedKlassName} addEvent={this.handleModalAddNew} updateEvent={this.handleModalUpdate} />
           </ContentContainerBody>
         </ContentContainer>
       ]
