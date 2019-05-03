@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import '../../styles/App.css';
+import '../../styles/controls.css';
 import '../../styles/login.css';
 import { LoginViewModel } from 'src/ViewModels/Login/loginViewModel';
 import { Redirect } from 'react-router';
@@ -62,7 +63,9 @@ public loginViewModel = new LoginViewModel();
                         <Row className="justify-content-center">
                             <Col lg="12" xs="12">
                                 <div className="login-form-group">
-                                    <FontAwesomeIcon icon="envelope" />
+                                    <div className="form-group-icon">
+                                        <FontAwesomeIcon icon="envelope" />
+                                    </div>
                                     <input type="email" placeholder="E-Mail" onChange={this.handelUserNameChange} />
                                 </div>
                             </Col>
@@ -70,7 +73,9 @@ public loginViewModel = new LoginViewModel();
                         <Row className="justify-content-center">
                             <Col lg="12" xs="12">
                                 <div className="login-form-group">
-                                    <FontAwesomeIcon icon="key" />
+                                    <div className="form-group-icon">
+                                        <FontAwesomeIcon icon="key" />
+                                    </div>
                                     <input type="password" placeholder="Passwort" onChange={this.handelPasswordChange} />
                                 </div>
                             </Col>

@@ -12,3 +12,11 @@
 .nav-pills-action-button :hover {
   color: #d35400;
 }
+.nav-pills-action-button-float-left {
+  float: left;
+  cursor: pointer;
+  margin-left: 5px;
+}
+.nav-pills-action-button-float-left :hover {
+  color: #d35400;
+}
